@@ -195,7 +195,7 @@ add(r"\node[anchor=north west,align=left] at (-4.2,6.3) {\large\bfseries "
     r"\normalsize\mdseries 20\,kV, 50\,Hz, radial base case. "
     r"Nine PV inverters on feeder 1, 6.44\,MW in total.};")
 
-LX, LY = 7.90, -8.6
+LX, LY = 7.90, -6.4
 add(rf"\node[anchor=north west,align=left,draw=black!25,line width=0.5pt,"
     rf"rounded corners=2pt,inner sep=7pt,fill=black!2] at ({LX},{LY}) {{%")
 add(r"\footnotesize\begin{tabular}{@{}l@{\ \ }l@{}}")
@@ -211,6 +211,12 @@ add(rf"\node[anchor=north west,align=left,text width=5.0cm] at ({LX},{LY - 3.15}
     r"{\footnotesize Inverter rating is $1.1\,P_{\mathrm{mpp}}$, so each unit keeps "
     r"reactive capability at full sun. Bus 1 and bus 12 carry the other feeders on "
     r"the same transformer and are not part of the modelled feeders.};")
+add(rf"\node[anchor=north west,align=left,text width=5.0cm,text=black!55] "
+    rf"at ({LX},{LY - 5.60}) "
+    r"{\scriptsize Network, loads and line data: CIGRE Technical Brochure 575, "
+    r"Section 6.2. PV ratings: Wagle et al., \emph{Front.\ Energy Res.} "
+    r"10:1054870 (2023), Table 1. The 1.5\,MW wind unit of the brochure at bus 7 "
+    r"is replaced by PV here.};")
 
 PRE = r"""\documentclass[border=8pt]{standalone}
 \usepackage[T1]{fontenc}
