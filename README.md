@@ -63,12 +63,17 @@ The CIGRE European MV benchmark (CIGRE Technical Brochure 575, Section 6.2): 20 
 two feeders from a 110/20 kV substation, built in OpenDSS from the published data and
 validated against pandapower to five decimal places. Feeder 1, buses 1 to 11, carries the PV.
 
-![CIGRE MV feeder](figures/nb01_feeder.png)
+![Single-line diagram of the CIGRE European MV benchmark](figures/cigre_mv_sld.png)
 
-Buses 7 and 11 are the ends of the two laterals, the electrically weakest points, and they
-are where every voltage problem in this study appears.
+In the radial base case the three tie switches are open, so feeder 1 leaves bus 3 as two
+laterals: buses 4 to 6, and buses 8 to 11 with bus 7 hanging off bus 8. Buses 7 and 11 are
+the ends of those laterals, the electrically weakest points, and they are where every
+voltage problem in this study appears. The transformer tap is one step below the brochure
+setting, +4.375 % instead of +6.25 %, because the published setting overvolts the feeder at
+light load before any PV is added.
 
-*Notebook: `notebooks/01_feeder.ipynb`.*
+*Notebook: `notebooks/01_feeder.ipynb`. The diagram is drawn by `src/make_sld.py`, which
+reads the same data file the notebooks read.*
 
 ## 2. The problem
 
@@ -259,7 +264,9 @@ the default curve.
 
 Modules in `src/`: `cigre_dss.py` (feeder), `profiles.py` (PV and load models), `simulate.py`
 (year runs, OPF), `kpi.py` (metrics), `env.py` (environment and safety layer), `agents.py`
-(SAC).
+(SAC). Also in `src/`, and not used by any notebook, `make_sld.py` draws the single-line
+diagram at the top of this README from the network data file; it needs a LaTeX installation
+with TikZ, and PyMuPDF if you want the PNG as well as the PDF.
 
 ```
 notebooks/   the seven notebooks, run in order
