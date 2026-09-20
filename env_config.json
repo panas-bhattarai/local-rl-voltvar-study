@@ -1,0 +1,444 @@
+{
+  "env": {
+    "pv_scale": 1.0,
+    "kva_ratio": 1.1,
+    "tr1_tap_pct": 4.375,
+    "safety_layer": true,
+    "year": 2023,
+    "seed": 0,
+    "w_viol": 1000.0,
+    "w_loss": 0.01,
+    "w_q": 0.001,
+    "w_curt": 0.05,
+    "w_safety": 0.002,
+    "w_safety_event": 5.0,
+    "v_hi": 1.05,
+    "v_lo": 0.95,
+    "safety_margin": 0.002,
+    "safety_q_cap_pu": null,
+    "profiles": "profiles_2023.h5",
+    "label": "100 % PV, fence on: hold the limit with less reactive effort and loss than the default curve"
+  },
+  "curve": {
+    "fixed": {
+      "V1": 0.92,
+      "Q1": 0.44,
+      "V2": 0.98
+    },
+    "V3_range": [
+      1.0,
+      1.03
+    ],
+    "V4_range": [
+      "V3 + 0.02",
+      1.18
+    ],
+    "Q4_range": [
+      0.0,
+      0.44
+    ],
+    "default_action": [
+      0.33333333333333326,
+      -0.4285714285714277,
+      1.0
+    ],
+    "tight_action": [
+      -1.0,
+      -0.7499999999999997,
+      1.0
+    ],
+    "lazy_action": [
+      1.0,
+      -0.2307692307692295,
+      1.0
+    ],
+    "default_curve": [
+      1.02,
+      1.08,
+      0.44
+    ],
+    "tight_curve": [
+      1.0,
+      1.04,
+      0.44
+    ],
+    "lazy_curve": [
+      1.03,
+      1.1,
+      0.44
+    ]
+  },
+  "obs_names": [
+    "v_pu",
+    "p_pu_kva",
+    "q_pu_kva",
+    "sin_tod",
+    "cos_tod",
+    "irr_pu"
+  ],
+  "act_names": [
+    "V3",
+    "V4",
+    "Q4"
+  ],
+  "n_units": 9,
+  "pv_buses": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "f1_buses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "consistency": {
+    "default": {
+      "env": {
+        "hours_violation": 0.0,
+        "hours_over": 0.0,
+        "hours_under": 0.0,
+        "vpi": 0.0,
+        "losses_mwh": 395.5189484947241,
+        "curtailed_mwh": 7.591063086818131e-06,
+        "reactive_mvarh": 1081.514697401693,
+        "reactive_absorbed_mvarh": 1040.389961045102,
+        "reactive_injected_mvarh": 41.124736356590844,
+        "pv_energy_mwh": 8585.456084837193,
+        "n_fail": 0,
+        "vmax": 1.0421133781135639,
+        "vmin": 0.9706531265430183,
+        "hours": 8760.0
+      },
+      "reference": "B1",
+      "reference_kpis": {
+        "curtailed_mwh": 7.640039784160266e-06,
+        "hours": 8760.0,
+        "hours_over": 0.0,
+        "hours_under": 0.0,
+        "hours_violation": 0.0,
+        "losses_mwh": 395.51905265930276,
+        "n_fail": 0.0,
+        "pv_energy_mwh": 8585.45608473594,
+        "reactive_absorbed_mvarh": 1040.3991723020895,
+        "reactive_injected_mvarh": 41.12421950563105,
+        "reactive_mvarh": 1081.5233918077206,
+        "vmax": 1.0421133781135639,
+        "vmin": 0.9706531265430186,
+        "vpi": 0.0
+      }
+    },
+    "tight": {
+      "env": {
+        "hours_violation": 0.0,
+        "hours_over": 0.0,
+        "hours_under": 0.0,
+        "vpi": 0.0,
+        "losses_mwh": 453.1489861723823,
+        "curtailed_mwh": 1.403285098539293e-05,
+        "reactive_mvarh": 4313.527560531808,
+        "reactive_absorbed_mvarh": 4272.400287219497,
+        "reactive_injected_mvarh": 41.12727331231054,
+        "pv_energy_mwh": 8585.456085062635,
+        "n_fail": 0,
+        "vmax": 1.0350828645941579,
+        "vmin": 0.9706530028388239,
+        "hours": 8760.0
+      },
+      "reference": "B3",
+      "reference_kpis": {
+        "curtailed_mwh": 1.4096088204254297e-05,
+        "hours": 8760.0,
+        "hours_over": 0.0,
+        "hours_under": 0.0,
+        "hours_violation": 0.0,
+        "losses_mwh": 453.1488166799376,
+        "n_fail": 0.0,
+        "pv_energy_mwh": 8585.456085034666,
+        "reactive_absorbed_mvarh": 4272.386418295057,
+        "reactive_injected_mvarh": 41.127385824223644,
+        "reactive_mvarh": 4313.513804119281,
+        "vmax": 1.0350819911507496,
+        "vmin": 0.9706530028388239,
+        "vpi": 0.0
+      }
+    },
+    "lazy": {
+      "env": {
+        "hours_violation": 0.0,
+        "hours_over": 0.0,
+        "hours_under": 0.0,
+        "vpi": 0.0,
+        "losses_mwh": 387.4109666121195,
+        "curtailed_mwh": 5.145207595957362e-06,
+        "reactive_mvarh": 334.8294260404188,
+        "reactive_absorbed_mvarh": 293.7019504783362,
+        "reactive_injected_mvarh": 41.12747556208268,
+        "pv_energy_mwh": 8585.456084439747,
+        "n_fail": 0,
+        "vmax": 1.0485295244915858,
+        "vmin": 0.9706531265430178,
+        "hours": 8760.0
+      },
+      "reference": "B4",
+      "reference_kpis": {
+        "curtailed_mwh": 5.172899803670336e-06,
+        "hours": 8760.0,
+        "hours_over": 0.0,
+        "hours_under": 0.0,
+        "hours_violation": 0.0,
+        "losses_mwh": 387.4109916947954,
+        "n_fail": 0.0,
+        "pv_energy_mwh": 8585.456084344287,
+        "reactive_absorbed_mvarh": 293.70438098294284,
+        "reactive_injected_mvarh": 41.12758678192151,
+        "reactive_mvarh": 334.8319677648643,
+        "vmax": 1.0485295244915855,
+        "vmin": 0.9706531265430178,
+        "vpi": 0.0
+      }
+    }
+  },
+  "reward_ranking": {
+    "default": {
+      "core": -20146.818247608353,
+      "viol": 0.0,
+      "loss": -15820.757939788966,
+      "q": -4326.058789606772,
+      "curt": -0.001518212617363626,
+      "hours_violation": 0.0,
+      "q_abs_mvarh": 1040.389961045102,
+      "losses_mwh": 395.5189484947241,
+      "vmax": 1.0421133781135639
+    },
+    "tight": {
+      "core": -35380.07249559272,
+      "viol": 0.0,
+      "loss": -18125.959446895293,
+      "q": -17254.11024212723,
+      "curt": -0.002806570197078586,
+      "hours_violation": 0.0,
+      "q_abs_mvarh": 4272.400287219497,
+      "losses_mwh": 453.1489861723823,
+      "vmax": 1.0350828645941579
+    },
+    "lazy": {
+      "core": -16835.757397687976,
+      "viol": 0.0,
+      "loss": -15496.438664484782,
+      "q": -1339.3177041616755,
+      "curt": -0.0010290415191914724,
+      "hours_violation": 0.0,
+      "q_abs_mvarh": 293.7019504783362,
+      "losses_mwh": 387.4109666121195,
+      "vmax": 1.0485295244915858
+    }
+  },
+  "fence_random_worst_day": {
+    "off": {
+      "steps": 96,
+      "fence_steps": 0,
+      "curtail_steps": 0,
+      "dq_kvarh": 0.0,
+      "dq_max_kvar": 0.0,
+      "dp_kwh": 0.0,
+      "dp_max_kw": 0.0,
+      "solves_per_intervention": 0.0,
+      "hours_violation": 0.5,
+      "vmax": 1.051082267686538,
+      "vmax_before": 1.051082267686538,
+      "q_abs_mvarh": 5.709626844819544,
+      "reward_core": -63.326016151118196,
+      "reward_total": -63.326016151118196
+    },
+    "on": {
+      "steps": 96,
+      "fence_steps": 2,
+      "curtail_steps": 0,
+      "dq_kvarh": 59.84703004934664,
+      "dq_max_kvar": 129.4251699790373,
+      "dp_kwh": 0.0,
+      "dp_max_kw": 0.0,
+      "solves_per_intervention": 11.0,
+      "hours_violation": 0.0,
+      "vmax": 1.0482096655770292,
+      "vmax_before": 1.051081228683689,
+      "q_abs_mvarh": 5.775254778179284,
+      "reward_core": -60.424736574571455,
+      "reward_total": -70.90351281496623
+    }
+  },
+  "fence_random_year": {
+    "steps": 35040,
+    "fence_steps": 13,
+    "curtail_steps": 0,
+    "dq_kvarh": 465.8532398388665,
+    "dq_max_kvar": 189.83038326901195,
+    "dp_kwh": 0.0,
+    "dp_max_kw": 0.0,
+    "solves_per_intervention": 11.0,
+    "hours_violation": 0.0,
+    "vmax": 1.0499778368163055,
+    "vmax_before": 1.0527025138745654,
+    "q_abs_mvarh": 1016.0840914920452,
+    "reward_core": -19979.93379140005,
+    "reward_total": -20048.66061731876
+  },
+  "pv_scale_sweep": {
+    "1.0_unity_pf": {
+      "hours_violation": 199.75,
+      "hours_over": 199.75,
+      "hours_under": 0.0,
+      "vpi": 3.9947345372174787,
+      "losses_mwh": 383.7368649760337,
+      "curtailed_mwh": 4.003229745229708e-07,
+      "reactive_mvarh": 7.37896980729295e-07,
+      "reactive_absorbed_mvarh": 4.412289436526029e-07,
+      "reactive_injected_mvarh": 2.9666803707669205e-07,
+      "pv_energy_mwh": 8585.456081310065,
+      "n_fail": 0,
+      "vmax": 1.0636786608454647,
+      "vmin": 0.9619594217127495,
+      "hours": 8760.0
+    },
+    "1.0_default_curve": {
+      "hours_violation": 0.0,
+      "hours_over": 0.0,
+      "hours_under": 0.0,
+      "vpi": 0.0,
+      "losses_mwh": 395.5189484947241,
+      "curtailed_mwh": 7.591063086818131e-06,
+      "reactive_mvarh": 1081.514697401693,
+      "reactive_absorbed_mvarh": 1040.389961045102,
+      "reactive_injected_mvarh": 41.124736356590844,
+      "pv_energy_mwh": 8585.456084837193,
+      "n_fail": 0,
+      "vmax": 1.0421133781135639,
+      "vmin": 0.9706531265430183,
+      "hours": 8760.0
+    },
+    "1.25_unity_pf": {
+      "hours_violation": 557.25,
+      "hours_over": 557.25,
+      "hours_under": 0.0,
+      "vpi": 38.05303396576629,
+      "losses_mwh": 437.4942701691799,
+      "curtailed_mwh": 4.366703539160077e-07,
+      "reactive_mvarh": 8.26350074363722e-07,
+      "reactive_absorbed_mvarh": 4.848730782933995e-07,
+      "reactive_injected_mvarh": 3.4147699607032255e-07,
+      "pv_energy_mwh": 10731.820101727444,
+      "n_fail": 0,
+      "vmax": 1.075799456483151,
+      "vmin": 0.9619594217127495,
+      "hours": 8760.0
+    },
+    "1.25_default_curve": {
+      "hours_violation": 0.0,
+      "hours_over": 0.0,
+      "hours_under": 0.0,
+      "vpi": 0.0,
+      "losses_mwh": 462.4144244395957,
+      "curtailed_mwh": 1.130923604385856e-05,
+      "reactive_mvarh": 1565.6614981246153,
+      "reactive_absorbed_mvarh": 1520.9632052586744,
+      "reactive_injected_mvarh": 44.69829286594098,
+      "pv_energy_mwh": 10731.820106339339,
+      "n_fail": 0,
+      "vmax": 1.0451144150078375,
+      "vmin": 0.9715796035610972,
+      "hours": 8760.0
+    },
+    "1.5_unity_pf": {
+      "hours_violation": 786.25,
+      "hours_over": 786.25,
+      "hours_under": 0.0,
+      "vpi": 94.44503716206805,
+      "losses_mwh": 521.9403725355938,
+      "curtailed_mwh": 4.987235246125543e-07,
+      "reactive_mvarh": 8.560668756683128e-07,
+      "reactive_absorbed_mvarh": 4.75954917593249e-07,
+      "reactive_injected_mvarh": 3.801119580750637e-07,
+      "pv_energy_mwh": 12878.184122160439,
+      "n_fail": 0,
+      "vmax": 1.0870594146986734,
+      "vmin": 0.9619594217127498,
+      "hours": 8760.0
+    },
+    "1.5_default_curve": {
+      "hours_violation": 0.0,
+      "hours_over": 0.0,
+      "hours_under": 0.0,
+      "vpi": 0.0,
+      "losses_mwh": 566.7510005516582,
+      "curtailed_mwh": 1.5310037073014747e-05,
+      "reactive_mvarh": 2107.9106157818055,
+      "reactive_absorbed_mvarh": 2060.1852993865327,
+      "reactive_injected_mvarh": 47.725316395272614,
+      "pv_energy_mwh": 12878.184127639151,
+      "n_fail": 0,
+      "vmax": 1.0472968535455134,
+      "vmin": 0.9723148826812125,
+      "hours": 8760.0
+    },
+    "2.0_unity_pf": {
+      "hours_violation": 1149.75,
+      "hours_over": 1149.75,
+      "hours_under": 0.0,
+      "vpi": 235.44707885053106,
+      "losses_mwh": 778.3870394084694,
+      "curtailed_mwh": 7.703501609895857e-07,
+      "reactive_mvarh": 1.470829392794631e-06,
+      "reactive_absorbed_mvarh": 6.687359924739278e-07,
+      "reactive_injected_mvarh": 8.020934003207033e-07,
+      "pv_energy_mwh": 17170.91216306154,
+      "n_fail": 0,
+      "vmax": 1.1072085616294352,
+      "vmin": 0.9619594217127497,
+      "hours": 8760.0
+    },
+    "2.0_default_curve": {
+      "hours_violation": 0.0,
+      "hours_over": 0.0,
+      "hours_under": 0.0,
+      "vpi": 0.0,
+      "losses_mwh": 886.4915268983419,
+      "curtailed_mwh": 2.340448019772121e-05,
+      "reactive_mvarh": 3292.330869191511,
+      "reactive_absorbed_mvarh": 3239.7920640087837,
+      "reactive_injected_mvarh": 52.53880518272653,
+      "pv_energy_mwh": 17170.91216902434,
+      "n_fail": 0,
+      "vmax": 1.0497106328859784,
+      "vmin": 0.9734162807552593,
+      "hours": 8760.0
+    }
+  },
+  "runtime_s": {
+    "default_off": 21.21116149998852,
+    "tight_off": 22.61657430001651,
+    "lazy_off": 19.301534099999117,
+    "random_year_on": 21.89707130001625,
+    "sweep_B0_1.0": 11.818488999997498,
+    "sweep_B0_1.25": 11.812933300010627,
+    "sweep_B1_1.25": 21.35966489999555,
+    "sweep_B0_1.5": 11.883764700003667,
+    "sweep_B1_1.5": 22.007200300024124,
+    "sweep_B0_2.0": 12.327222599997185,
+    "sweep_B1_2.0": 22.740326099999947
+  }
+}

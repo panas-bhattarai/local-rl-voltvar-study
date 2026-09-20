@@ -1,0 +1,15 @@
+{
+  "worst_day": "2023-07-22",
+  "worst_day_index": 202,
+  "typical_day": "2023-09-14",
+  "typical_day_index": 256,
+  "clear_day": "2023-07-05",
+  "cloudy_day": "2023-06-04",
+  "hours_over_1p05_unity_pf": 199.75,
+  "vmax_year": 1.0636786610881632,
+  "vmin_year": 0.961959419078122,
+  "tr1_tap_pct": 4.375,
+  "steps_per_day": 96,
+  "year": 2023,
+  "seed": 0
+}

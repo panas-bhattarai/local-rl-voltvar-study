@@ -1,0 +1,1022 @@
+{
+  "setup": {
+    "year": 2023,
+    "tr1_tap_pct": 4.375,
+    "kva_ratio": 1.1,
+    "pv_buses": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "pv_kw": [
+      690.0,
+      690.0,
+      680.0,
+      680.0,
+      740.0,
+      740.0,
+      740.0,
+      740.0,
+      740.0
+    ],
+    "reward_weights": {
+      "viol": 1000.0,
+      "loss": 0.01,
+      "q": 0.001,
+      "curt": 0.05
+    },
+    "sample_days": [
+      0,
+      5,
+      12,
+      13,
+      25,
+      59,
+      90,
+      98,
+      104,
+      141,
+      171,
+      174,
+      190,
+      197,
+      199,
+      202,
+      211,
+      214,
+      222,
+      224,
+      239,
+      255,
+      256,
+      266,
+      278,
+      280,
+      286,
+      291,
+      309,
+      316,
+      332,
+      339
+    ],
+    "worst_day": "2023-07-22",
+    "typical_day": "2023-09-14"
+  },
+  "full_year": {
+    "unity pf": {
+      "hours_violation": 199.75,
+      "vmax": 1.0636786222457886,
+      "vmin": 0.9619594216346741,
+      "losses_mwh": 383.7368649613857,
+      "reactive_absorbed_mvarh": 4.4122894363627963e-07,
+      "reactive_injected_mvarh": 2.966680371000015e-07,
+      "curtailed_mwh": 9.458848519716411e-05,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -31328.43665245802
+    },
+    "default curve": {
+      "hours_violation": 0.0,
+      "vmax": 1.0421134233474731,
+      "vmin": 0.9706531167030334,
+      "losses_mwh": 395.51894851315024,
+      "reactive_absorbed_mvarh": 1040.3899610746055,
+      "reactive_injected_mvarh": 41.12473634913137,
+      "curtailed_mwh": 9.40807000832124e-05,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -20146.83554636097
+    },
+    "tight curve": {
+      "hours_violation": 0.0,
+      "vmax": 1.0350828170776367,
+      "vmin": 0.9706529974937439,
+      "losses_mwh": 453.14898615264894,
+      "reactive_absorbed_mvarh": 4272.400287540454,
+      "reactive_injected_mvarh": 41.12727329793698,
+      "curtailed_mwh": 9.562641621812555e-05,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -35380.08881474277
+    },
+    "lazy curve": {
+      "hours_violation": 0.0,
+      "vmax": 1.0485295057296753,
+      "vmin": 0.9706531167030334,
+      "losses_mwh": 387.41096651691197,
+      "reactive_absorbed_mvarh": 293.7019504630441,
+      "reactive_injected_mvarh": 41.12747556598901,
+      "curtailed_mwh": 9.337423090946163e-05,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -16835.775039638793
+    },
+    "learned, seed 0": {
+      "hours_violation": 0.0,
+      "vmax": 1.0499987602233887,
+      "vmin": 0.9706454277038574,
+      "losses_mwh": 386.44469806301595,
+      "reactive_absorbed_mvarh": 372.3737826424275,
+      "reactive_injected_mvarh": 41.1266566636826,
+      "curtailed_mwh": 9.6360615571072e-05,
+      "fence_steps": 36,
+      "fence_mvarh": 1.3469308185577393,
+      "core_reward": -17111.80895186819
+    },
+    "learned, seed 0, end of training": {
+      "hours_violation": 0.0,
+      "vmax": 1.0495575666427612,
+      "vmin": 0.9706538319587708,
+      "losses_mwh": 389.5074513232708,
+      "reactive_absorbed_mvarh": 628.2126774205016,
+      "reactive_injected_mvarh": 41.12599274272412,
+      "curtailed_mwh": 9.589088226183533e-05,
+      "fence_steps": 36,
+      "fence_mvarh": 1.6788170642852782,
+      "core_reward": -18257.67191176019
+    },
+    "learned, seed 1": {
+      "hours_violation": 0.0,
+      "vmax": 1.0499889850616455,
+      "vmin": 0.9706512689590454,
+      "losses_mwh": 385.60085712724924,
+      "reactive_absorbed_mvarh": 309.750794973813,
+      "reactive_injected_mvarh": 41.12636627860169,
+      "curtailed_mwh": 9.486627716972285e-05,
+      "fence_steps": 130,
+      "fence_mvarh": 4.166732152938843,
+      "core_reward": -16827.56190335506
+    },
+    "learned, seed 1, end of training": {
+      "hours_violation": 0.0,
+      "vmax": 1.04997980594635,
+      "vmin": 0.9706454277038574,
+      "losses_mwh": 386.3475554912686,
+      "reactive_absorbed_mvarh": 359.1374887459689,
+      "reactive_injected_mvarh": 41.12694905916537,
+      "curtailed_mwh": 9.526440190999017e-05,
+      "fence_steps": 84,
+      "fence_mvarh": 2.7154450931549072,
+      "core_reward": -17054.979023751664
+    },
+    "learned, seed 2": {
+      "hours_violation": 0.0,
+      "vmax": 1.0499767065048218,
+      "vmin": 0.9706512689590454,
+      "losses_mwh": 386.62960200232266,
+      "reactive_absorbed_mvarh": 265.9671945267028,
+      "reactive_injected_mvarh": 41.127046412290774,
+      "curtailed_mwh": 0.004842806447817712,
+      "fence_steps": 79,
+      "fence_mvarh": 2.943611698150635,
+      "core_reward": -16694.529605138447
+    },
+    "learned, seed 2, end of training": {
+      "hours_violation": 0.0,
+      "vmax": 1.0498952865600586,
+      "vmin": 0.9706512689590454,
+      "losses_mwh": 387.164656722188,
+      "reactive_absorbed_mvarh": 338.07412835012065,
+      "reactive_injected_mvarh": 41.12741001572065,
+      "curtailed_mwh": 0.15471481031556517,
+      "fence_steps": 66,
+      "fence_mvarh": 2.5554504013061523,
+      "core_reward": -17034.335384413997
+    },
+    "best fixed curve + fence (V3 1.03, V4 1.16)": {
+      "hours_violation": 0.0,
+      "vmax": 1.0499748436582148,
+      "vmin": 0.9706512415330343,
+      "losses_mwh": 385.79232981901373,
+      "reactive_absorbed_mvarh": 202.18276918017764,
+      "reactive_injected_mvarh": 41.1275270342063,
+      "curtailed_mwh": 5.746110094242333e-06,
+      "fence_steps": 43,
+      "fence_mvarh": 1.329778236263008,
+      "core_reward": -16404.935526840105
+    }
+  },
+  "sampled_days": {
+    "unity pf": {
+      "hours_violation": 24.75,
+      "vmax": 1.0636786222457886,
+      "vmin": 0.9626502394676208,
+      "losses_mwh": 32.831673317074774,
+      "reactive_absorbed_mvarh": 3.421331473623182e-08,
+      "reactive_injected_mvarh": 2.411929279322184e-08,
+      "curtailed_mwh": 8.189679123461247e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -3396.5194987772284
+    },
+    "default curve": {
+      "hours_violation": 0.0,
+      "vmax": 1.0421134233474731,
+      "vmin": 0.9709710478782654,
+      "losses_mwh": 33.94213561308384,
+      "reactive_absorbed_mvarh": 97.11441608345753,
+      "reactive_injected_mvarh": 3.605593281245633,
+      "curtailed_mwh": 8.092159162219926e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -1760.5670804139988
+    },
+    "tight curve": {
+      "hours_violation": 0.0,
+      "vmax": 1.0349318981170654,
+      "vmin": 0.9709731340408325,
+      "losses_mwh": 39.16007077336312,
+      "reactive_absorbed_mvarh": 389.2900441470931,
+      "reactive_injected_mvarh": 3.606158854671661,
+      "curtailed_mwh": 8.316530260304383e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -3137.989306247636
+    },
+    "lazy curve": {
+      "hours_violation": 0.0,
+      "vmax": 1.0485295057296753,
+      "vmin": 0.9709736108779907,
+      "losses_mwh": 33.20041500151157,
+      "reactive_absorbed_mvarh": 28.72588442159657,
+      "reactive_injected_mvarh": 3.6060575310331875,
+      "curtailed_mwh": 8.026278678949628e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -1457.345973126718
+    },
+    "learned, seed 0": {
+      "hours_violation": 0.0,
+      "vmax": 1.0494588613510132,
+      "vmin": 0.9709728956222534,
+      "losses_mwh": 33.112557103157044,
+      "reactive_absorbed_mvarh": 36.03403690054893,
+      "reactive_injected_mvarh": 3.6062380570828814,
+      "curtailed_mwh": 8.415705993390029e-06,
+      "fence_steps": 8,
+      "fence_mvarh": 0.37173802185058596,
+      "core_reward": -1483.0650670980076
+    },
+    "learned, seed 0, end of training": {
+      "hours_violation": 0.0,
+      "vmax": 1.0493065118789673,
+      "vmin": 0.9709720015525818,
+      "losses_mwh": 33.42281393015384,
+      "reactive_absorbed_mvarh": 60.88566327642513,
+      "reactive_injected_mvarh": 3.6057397534944964,
+      "curtailed_mwh": 8.339558588117014e-06,
+      "fence_steps": 8,
+      "fence_mvarh": 0.43174618339538573,
+      "core_reward": -1594.87983723755
+    },
+    "learned, seed 1": {
+      "hours_violation": 0.0,
+      "vmax": 1.0497874021530151,
+      "vmin": 0.9709728956222534,
+      "losses_mwh": 33.025219130158426,
+      "reactive_absorbed_mvarh": 29.836109262333782,
+      "reactive_injected_mvarh": 3.6060883832881485,
+      "curtailed_mwh": 8.25251302237202e-06,
+      "fence_steps": 15,
+      "fence_mvarh": 0.5227812843322754,
+      "core_reward": -1454.779206291429
+    },
+    "learned, seed 1, end of training": {
+      "hours_violation": 0.0,
+      "vmax": 1.0494463443756104,
+      "vmin": 0.9709728956222534,
+      "losses_mwh": 33.10578065204621,
+      "reactive_absorbed_mvarh": 35.41722582584926,
+      "reactive_injected_mvarh": 3.6060564712673195,
+      "curtailed_mwh": 8.182018847649228e-06,
+      "fence_steps": 12,
+      "fence_mvarh": 0.4447935104370117,
+      "core_reward": -1480.325991674084
+    },
+    "learned, seed 2": {
+      "hours_violation": 0.0,
+      "vmax": 1.049915075302124,
+      "vmin": 0.970973014831543,
+      "losses_mwh": 33.13208355093003,
+      "reactive_absorbed_mvarh": 26.113171048800506,
+      "reactive_injected_mvarh": 3.6058905661095997,
+      "curtailed_mwh": 8.265721659505401e-06,
+      "fence_steps": 10,
+      "fence_mvarh": 0.42264562797546384,
+      "core_reward": -1444.161241641173
+    },
+    "learned, seed 2, end of training": {
+      "hours_violation": 0.0,
+      "vmax": 1.0492355823516846,
+      "vmin": 0.970973014831543,
+      "losses_mwh": 33.18868290019035,
+      "reactive_absorbed_mvarh": 32.990518093568454,
+      "reactive_injected_mvarh": 3.6059622734276027,
+      "curtailed_mwh": 8.331361755303744e-06,
+      "fence_steps": 8,
+      "fence_mvarh": 0.30185297393798827,
+      "core_reward": -1473.9349037479494
+    },
+    "OPF bound": {
+      "hours_violation": 0.25,
+      "vmax": 1.0500041246414185,
+      "vmin": 0.9626502394676208,
+      "losses_mwh": 32.898377502083775,
+      "reactive_absorbed_mvarh": 4.525202569982401,
+      "reactive_injected_mvarh": 0.39544034369304426,
+      "curtailed_mwh": 0.014101585620082915,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -1338.442113503488
+    },
+    "OPF, loss objective": {
+      "hours_violation": 0.0,
+      "vmax": 1.0499982757143107,
+      "vmin": 0.9768043306631883,
+      "losses_mwh": 31.72008166529917,
+      "reactive_absorbed_mvarh": 5.0750798688957115,
+      "reactive_injected_mvarh": 88.87513579624054,
+      "curtailed_mwh": 3.703645816958928e-08,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -1644.6041366798036
+    },
+    "best fixed curve + fence (V3 1.03, V4 1.16)": {
+      "hours_violation": 0.0,
+      "vmax": 1.0498195901954943,
+      "vmin": 0.9709736119541219,
+      "losses_mwh": 33.04261272084011,
+      "reactive_absorbed_mvarh": 19.876169276194425,
+      "reactive_injected_mvarh": 3.6059249984523705,
+      "curtailed_mwh": 6.015503798419072e-07,
+      "fence_steps": 7,
+      "fence_mvarh": 0.2317960007061681,
+      "core_reward": -1415.6330062422676
+    }
+  },
+  "gap_closed_sampled_days": {
+    "lazy curve": {
+      "losses": 0.7106250037775486,
+      "reactive energy absorbed": 0.7386230972996429,
+      "core reward": 0.7183207131919365
+    },
+    "best fixed curve + fence": {
+      "losses": 0.8618116427204209,
+      "reactive energy absorbed": 0.8342035089867363,
+      "core reward": 0.8171373437024305
+    },
+    "learned, seed 0": {
+      "losses": 0.794799581611821,
+      "reactive energy absorbed": 0.659692170017398,
+      "core reward": 0.6573930354013406
+    },
+    "learned, seed 1": {
+      "losses": 0.8784760312395382,
+      "reactive energy absorbed": 0.7266322314243687,
+      "core reward": 0.7244012984131207
+    },
+    "learned, seed 2": {
+      "losses": 0.7760917530764594,
+      "reactive energy absorbed": 0.7668414315272667,
+      "core reward": 0.7495549033466734
+    }
+  },
+  "learned_curves": {
+    "0": {
+      "v3_median": 1.0270425081253052,
+      "v4_median": 1.1305211782455444,
+      "q4_median": 0.2482803910970688,
+      "q_at_105_median": 0.06061493182534066,
+      "q_at_105_mean": 0.0654708947922273
+    },
+    "1": {
+      "v3_median": 1.0250211954116821,
+      "v4_median": 1.1379950046539307,
+      "q4_median": 0.14938606321811676,
+      "q_at_105_median": 0.03700082714362669,
+      "q_at_105_mean": 0.04597930712046981
+    },
+    "2": {
+      "v3_median": 1.0206809043884277,
+      "v4_median": 1.1038000583648682,
+      "q4_median": 0.11858194321393967,
+      "q_at_105_median": 0.03865529471025327,
+      "q_at_105_mean": 0.06000540036311962
+    }
+  },
+  "absorbed_day_night_mvarh": {
+    "default curve": {
+      "day": 561.5790578408191,
+      "night": 478.81090323378623
+    },
+    "tight curve": {
+      "day": 2011.4160574291088,
+      "night": 2260.984230111345
+    },
+    "lazy curve": {
+      "day": 259.91689717409383,
+      "night": 33.78505328895027
+    },
+    "best fixed curve + fence": {
+      "day": 179.29771484212563,
+      "night": 22.88505433805205
+    },
+    "learned, seed 0": {
+      "day": 198.3237274909755,
+      "night": 174.050055151452
+    },
+    "learned, seed 1": {
+      "day": 136.4265263417436,
+      "night": 173.3242686320694
+    },
+    "learned, seed 2": {
+      "day": 207.76059189879862,
+      "night": 58.206602627904196
+    }
+  },
+  "fixed_curve_grid": [
+    {
+      "V3": 1.02,
+      "V4": 1.06,
+      "hours_violation": 0.0,
+      "vmax": 1.038326179565079,
+      "vmin": 0.9706512407086517,
+      "losses_mwh": 399.1128743969722,
+      "reactive_absorbed_mvarh": 1248.46765531027,
+      "reactive_injected_mvarh": 41.12741763792896,
+      "curtailed_mwh": 7.510846953687955e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -21122.896769841074
+    },
+    {
+      "V3": 1.02,
+      "V4": 1.08,
+      "hours_violation": 0.0,
+      "vmax": 1.0421133781135639,
+      "vmin": 0.9706531265430183,
+      "losses_mwh": 395.5189484947241,
+      "reactive_absorbed_mvarh": 1040.389961045102,
+      "reactive_injected_mvarh": 41.124736356590844,
+      "curtailed_mwh": 7.591063086818131e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -20146.818247608353
+    },
+    {
+      "V3": 1.02,
+      "V4": 1.1,
+      "hours_violation": 0.0,
+      "vmax": 1.0452215247096661,
+      "vmin": 0.9706531265430182,
+      "losses_mwh": 393.16858145233743,
+      "reactive_absorbed_mvarh": 891.779993497403,
+      "reactive_injected_mvarh": 41.12423871879139,
+      "curtailed_mwh": 7.56823206133464e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -19458.361700604688
+    },
+    {
+      "V3": 1.02,
+      "V4": 1.13,
+      "hours_violation": 0.0,
+      "vmax": 1.0484942720963133,
+      "vmin": 0.9706512407086518,
+      "losses_mwh": 390.878957892405,
+      "reactive_absorbed_mvarh": 734.3825184492746,
+      "reactive_injected_mvarh": 41.12689663240063,
+      "curtailed_mwh": 7.248501564181418e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -18737.197425723214
+    },
+    {
+      "V3": 1.02,
+      "V4": 1.16,
+      "hours_violation": 0.25,
+      "vmax": 1.0507835256192062,
+      "vmin": 0.9706512407086518,
+      "losses_mwh": 389.39807692704943,
+      "reactive_absorbed_mvarh": 624.1449827671158,
+      "reactive_injected_mvarh": 41.126575311200966,
+      "curtailed_mwh": 7.74306576139297e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -18239.259904977338
+    },
+    {
+      "V3": 1.025,
+      "V4": 1.06,
+      "hours_violation": 0.0,
+      "vmax": 1.0396440810388319,
+      "vmin": 0.9706512407086518,
+      "losses_mwh": 393.82756642119216,
+      "reactive_absorbed_mvarh": 783.9302755740674,
+      "reactive_injected_mvarh": 41.12822310333285,
+      "curtailed_mwh": 6.478544845931962e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -19053.337947266256
+    },
+    {
+      "V3": 1.025,
+      "V4": 1.08,
+      "hours_violation": 0.0,
+      "vmax": 1.043863901573574,
+      "vmin": 0.9706531265430183,
+      "losses_mwh": 391.3810476490582,
+      "reactive_absorbed_mvarh": 647.2223996678746,
+      "reactive_injected_mvarh": 41.12483205261316,
+      "curtailed_mwh": 6.353999098429632e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -18408.632103644097
+    },
+    {
+      "V3": 1.025,
+      "V4": 1.1,
+      "hours_violation": 0.0,
+      "vmax": 1.0468236233252117,
+      "vmin": 0.9706531265430186,
+      "losses_mwh": 389.79687737211714,
+      "reactive_absorbed_mvarh": 551.175601101358,
+      "reactive_injected_mvarh": 41.123662844938316,
+      "curtailed_mwh": 6.504047035733501e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -17961.07345147928
+    },
+    {
+      "V3": 1.025,
+      "V4": 1.13,
+      "hours_violation": 0.0,
+      "vmax": 1.0498981842430803,
+      "vmin": 0.9706512407086517,
+      "losses_mwh": 388.26315620229155,
+      "reactive_absorbed_mvarh": 450.85313323758714,
+      "reactive_injected_mvarh": 41.12711277323586,
+      "curtailed_mwh": 5.939339113923947e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -17498.448420002776
+    },
+    {
+      "V3": 1.025,
+      "V4": 1.16,
+      "hours_violation": 2.0,
+      "vmax": 1.0520383869153174,
+      "vmin": 0.9706512407086517,
+      "losses_mwh": 387.27444220396654,
+      "reactive_absorbed_mvarh": 381.38523129823096,
+      "reactive_injected_mvarh": 41.12677848196248,
+      "curtailed_mwh": 6.277974211253725e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -17195.512463917024
+    },
+    {
+      "V3": 1.03,
+      "V4": 1.06,
+      "hours_violation": 0.0,
+      "vmax": 1.041731278786908,
+      "vmin": 0.9706512407086515,
+      "losses_mwh": 390.0910901624722,
+      "reactive_absorbed_mvarh": 424.67065999922517,
+      "reactive_injected_mvarh": 41.12734582933444,
+      "curtailed_mwh": 5.336685011863989e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -17466.83669715013
+    },
+    {
+      "V3": 1.03,
+      "V4": 1.08,
+      "hours_violation": 0.0,
+      "vmax": 1.0457400455847672,
+      "vmin": 0.9706512407086517,
+      "losses_mwh": 388.4565670269438,
+      "reactive_absorbed_mvarh": 347.21084173977926,
+      "reactive_injected_mvarh": 41.127320049610304,
+      "curtailed_mwh": 5.590224257380403e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -17091.61644628016
+    },
+    {
+      "V3": 1.03,
+      "V4": 1.1,
+      "hours_violation": 0.0,
+      "vmax": 1.0485295244915858,
+      "vmin": 0.9706531265430178,
+      "losses_mwh": 387.4109666121195,
+      "reactive_absorbed_mvarh": 293.7019504783362,
+      "reactive_injected_mvarh": 41.12747556208268,
+      "curtailed_mwh": 5.145207595957362e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -16835.757397687976
+    },
+    {
+      "V3": 1.03,
+      "V4": 1.13,
+      "hours_violation": 1.25,
+      "vmax": 1.0513904363070123,
+      "vmin": 0.9706512407086519,
+      "losses_mwh": 386.40647036845564,
+      "reactive_absorbed_mvarh": 238.5829285228349,
+      "reactive_injected_mvarh": 41.126488480528145,
+      "curtailed_mwh": 4.896440483760018e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -16580.452693496285
+    },
+    {
+      "V3": 1.03,
+      "V4": 1.16,
+      "hours_violation": 10.75,
+      "vmax": 1.0533569512897663,
+      "vmin": 0.9706512407086519,
+      "losses_mwh": 385.76178625318965,
+      "reactive_absorbed_mvarh": 200.85309466403706,
+      "reactive_injected_mvarh": 41.12753445941396,
+      "curtailed_mwh": 5.053390384549784e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -16516.853231460238
+    }
+  ],
+  "best_fixed_curve_with_fence": {
+    "V3": 1.03,
+    "V4": 1.16
+  },
+  "best_fixed_curve_without_fence": {
+    "V3": 1.03,
+    "V4": 1.1
+  },
+  "fixed_curve_grid_fence_on": [
+    {
+      "V3": 1.02,
+      "V4": 1.06,
+      "hours_violation": 0.0,
+      "vmax": 1.038326179565079,
+      "vmin": 0.9706512407086517,
+      "losses_mwh": 399.1128743969722,
+      "reactive_absorbed_mvarh": 1248.46765531027,
+      "reactive_injected_mvarh": 41.12741763792896,
+      "curtailed_mwh": 7.510846953687955e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -21122.896769841074
+    },
+    {
+      "V3": 1.02,
+      "V4": 1.08,
+      "hours_violation": 0.0,
+      "vmax": 1.0421133781135639,
+      "vmin": 0.9706531265430183,
+      "losses_mwh": 395.5189484947241,
+      "reactive_absorbed_mvarh": 1040.389961045102,
+      "reactive_injected_mvarh": 41.124736356590844,
+      "curtailed_mwh": 7.591063086818131e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -20146.818247608353
+    },
+    {
+      "V3": 1.02,
+      "V4": 1.1,
+      "hours_violation": 0.0,
+      "vmax": 1.0452215247096661,
+      "vmin": 0.9706531265430182,
+      "losses_mwh": 393.16858145233743,
+      "reactive_absorbed_mvarh": 891.779993497403,
+      "reactive_injected_mvarh": 41.12423871879139,
+      "curtailed_mwh": 7.56823206133464e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -19458.361700604688
+    },
+    {
+      "V3": 1.02,
+      "V4": 1.13,
+      "hours_violation": 0.0,
+      "vmax": 1.0484942720963133,
+      "vmin": 0.9706512407086518,
+      "losses_mwh": 390.878957892405,
+      "reactive_absorbed_mvarh": 734.3825184492746,
+      "reactive_injected_mvarh": 41.12689663240063,
+      "curtailed_mwh": 7.248501564181418e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -18737.197425723214
+    },
+    {
+      "V3": 1.02,
+      "V4": 1.16,
+      "hours_violation": 0.0,
+      "vmax": 1.0494040644606721,
+      "vmin": 0.9706512413154701,
+      "losses_mwh": 389.3988870050113,
+      "reactive_absorbed_mvarh": 624.1748764158459,
+      "reactive_injected_mvarh": 41.12659539984907,
+      "curtailed_mwh": 9.12718245430072e-06,
+      "fence_steps": 1,
+      "fence_mvarh": 0.029853046345808546,
+      "core_reward": -18237.163192899723
+    },
+    {
+      "V3": 1.025,
+      "V4": 1.06,
+      "hours_violation": 0.0,
+      "vmax": 1.0396440810388319,
+      "vmin": 0.9706512407086518,
+      "losses_mwh": 393.82756642119216,
+      "reactive_absorbed_mvarh": 783.9302755740674,
+      "reactive_injected_mvarh": 41.12822310333285,
+      "curtailed_mwh": 6.478544845931962e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -19053.337947266256
+    },
+    {
+      "V3": 1.025,
+      "V4": 1.08,
+      "hours_violation": 0.0,
+      "vmax": 1.043863901573574,
+      "vmin": 0.9706531265430183,
+      "losses_mwh": 391.3810476490582,
+      "reactive_absorbed_mvarh": 647.2223996678746,
+      "reactive_injected_mvarh": 41.12483205261316,
+      "curtailed_mwh": 6.353999098429632e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -18408.632103644097
+    },
+    {
+      "V3": 1.025,
+      "V4": 1.1,
+      "hours_violation": 0.0,
+      "vmax": 1.0468236233252117,
+      "vmin": 0.9706531265430186,
+      "losses_mwh": 389.79687737211714,
+      "reactive_absorbed_mvarh": 551.175601101358,
+      "reactive_injected_mvarh": 41.123662844938316,
+      "curtailed_mwh": 6.504047035733501e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -17961.07345147928
+    },
+    {
+      "V3": 1.025,
+      "V4": 1.13,
+      "hours_violation": 0.0,
+      "vmax": 1.0498981842430803,
+      "vmin": 0.9706512407086517,
+      "losses_mwh": 388.26315620229155,
+      "reactive_absorbed_mvarh": 450.85313323758714,
+      "reactive_injected_mvarh": 41.12711277323586,
+      "curtailed_mwh": 5.939339113923947e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -17498.448420002776
+    },
+    {
+      "V3": 1.025,
+      "V4": 1.16,
+      "hours_violation": 0.0,
+      "vmax": 1.0499919133141074,
+      "vmin": 0.9706512416995797,
+      "losses_mwh": 387.2802534300248,
+      "reactive_absorbed_mvarh": 381.61695790326513,
+      "reactive_injected_mvarh": 41.125901865585284,
+      "curtailed_mwh": 7.181985975918335e-06,
+      "fence_steps": 8,
+      "fence_mvarh": 0.2318843441243226,
+      "core_reward": -17182.183012673588
+    },
+    {
+      "V3": 1.03,
+      "V4": 1.06,
+      "hours_violation": 0.0,
+      "vmax": 1.041731278786908,
+      "vmin": 0.9706512407086515,
+      "losses_mwh": 390.0910901624722,
+      "reactive_absorbed_mvarh": 424.67065999922517,
+      "reactive_injected_mvarh": 41.12734582933444,
+      "curtailed_mwh": 5.336685011863989e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -17466.83669715013
+    },
+    {
+      "V3": 1.03,
+      "V4": 1.08,
+      "hours_violation": 0.0,
+      "vmax": 1.0457400455847672,
+      "vmin": 0.9706512407086517,
+      "losses_mwh": 388.4565670269438,
+      "reactive_absorbed_mvarh": 347.21084173977926,
+      "reactive_injected_mvarh": 41.127320049610304,
+      "curtailed_mwh": 5.590224257380403e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -17091.61644628016
+    },
+    {
+      "V3": 1.03,
+      "V4": 1.1,
+      "hours_violation": 0.0,
+      "vmax": 1.0485295244915858,
+      "vmin": 0.9706531265430178,
+      "losses_mwh": 387.4109666121195,
+      "reactive_absorbed_mvarh": 293.7019504783362,
+      "reactive_injected_mvarh": 41.12747556208268,
+      "curtailed_mwh": 5.145207595957362e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -16835.757397687976
+    },
+    {
+      "V3": 1.03,
+      "V4": 1.13,
+      "hours_violation": 0.0,
+      "vmax": 1.049796096492531,
+      "vmin": 0.9706512416033246,
+      "losses_mwh": 386.4099548980476,
+      "reactive_absorbed_mvarh": 238.72078911332915,
+      "reactive_injected_mvarh": 41.12661945258889,
+      "curtailed_mwh": 5.426265876584745e-06,
+      "fence_steps": 5,
+      "fence_mvarh": 0.13800524122748162,
+      "core_reward": -16575.788915438752
+    },
+    {
+      "V3": 1.03,
+      "V4": 1.16,
+      "hours_violation": 0.0,
+      "vmax": 1.0499748436582148,
+      "vmin": 0.9706512415330343,
+      "losses_mwh": 385.79232981901373,
+      "reactive_absorbed_mvarh": 202.18276918017764,
+      "reactive_injected_mvarh": 41.1275270342063,
+      "curtailed_mwh": 5.746110094242333e-06,
+      "fence_steps": 43,
+      "fence_mvarh": 1.329778236263008,
+      "core_reward": -16404.935526840105
+    }
+  ],
+  "fence_off": {
+    "seed 0": {
+      "hours_violation": 9.5,
+      "vmax": 1.0607883431063592,
+      "vmin": 0.9706454070838073,
+      "losses_mwh": 386.4134102422183,
+      "reactive_absorbed_mvarh": 370.87279057243825,
+      "reactive_injected_mvarh": 41.12726993651186,
+      "curtailed_mwh": 5.4696304728161905e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -17388.358956091706
+    },
+    "seed 1": {
+      "hours_violation": 33.25,
+      "vmax": 1.0542785188621513,
+      "vmin": 0.9706512407086515,
+      "losses_mwh": 385.5164068945299,
+      "reactive_absorbed_mvarh": 305.4532361888905,
+      "reactive_injected_mvarh": 41.12696529415457,
+      "curtailed_mwh": 5.022120038278399e-06,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -17265.895519255646
+    },
+    "seed 2": {
+      "hours_violation": 21.0,
+      "vmax": 1.0577571765559568,
+      "vmin": 0.9706512407086519,
+      "losses_mwh": 386.5679302540767,
+      "reactive_absorbed_mvarh": 262.7638383333489,
+      "reactive_injected_mvarh": 41.1266093936657,
+      "curtailed_mwh": 0.0047335136044144134,
+      "fence_steps": 0,
+      "fence_mvarh": 0.0,
+      "core_reward": -17277.576953914464
+    }
+  },
+  "unseen_year": {
+    "profiles": "profiles_2023_seed1.h5",
+    "seed": 1,
+    "runs": {
+      "unity pf, second year": {
+        "hours_violation": 204.5,
+        "vmax": 1.0617978320835515,
+        "vmin": 0.9604943234038842,
+        "losses_mwh": 387.78667901096617,
+        "reactive_absorbed_mvarh": 4.23409001334224e-07,
+        "reactive_injected_mvarh": 2.8964317274927683e-07,
+        "curtailed_mwh": 4.1081716580809723e-07,
+        "fence_steps": 0,
+        "fence_mvarh": 0.0,
+        "core_reward": -33268.65583937769
+      },
+      "default curve, second year": {
+        "hours_violation": 0.0,
+        "vmax": 1.041313589182993,
+        "vmin": 0.9699704626477433,
+        "losses_mwh": 400.0794381991033,
+        "reactive_absorbed_mvarh": 1064.636503000942,
+        "reactive_injected_mvarh": 41.11031438413254,
+        "curtailed_mwh": 8.150207667631999e-06,
+        "fence_steps": 0,
+        "fence_mvarh": 0.0,
+        "core_reward": -20426.16642754597
+      },
+      "lazy curve, second year": {
+        "hours_violation": 0.0,
+        "vmax": 1.047671259113345,
+        "vmin": 0.9699708756069009,
+        "losses_mwh": 391.70177347833896,
+        "reactive_absorbed_mvarh": 307.9769435192185,
+        "reactive_injected_mvarh": 41.11124857991333,
+        "curtailed_mwh": 5.47067940154471e-06,
+        "fence_steps": 0,
+        "fence_mvarh": 0.0,
+        "core_reward": -17064.42480166597
+      },
+      "best fixed curve + fence, second year": {
+        "hours_violation": 0.0,
+        "vmax": 1.0499774557846164,
+        "vmin": 0.9699721356158112,
+        "losses_mwh": 389.9868800862685,
+        "reactive_absorbed_mvarh": 211.67580639683993,
+        "reactive_injected_mvarh": 41.11355121829074,
+        "curtailed_mwh": 6.667895694262301e-06,
+        "fence_steps": 37,
+        "fence_mvarh": 1.0523282213068719,
+        "core_reward": -16610.6339674904
+      },
+      "learned, seed 0, second year": {
+        "hours_violation": 0.0,
+        "vmax": 1.0499519181129786,
+        "vmin": 0.9699679502806714,
+        "losses_mwh": 390.6235451750487,
+        "reactive_absorbed_mvarh": 379.9778009372549,
+        "reactive_injected_mvarh": 41.112740407693984,
+        "curtailed_mwh": 7.524794956106187e-06,
+        "fence_steps": 24,
+        "fence_mvarh": 0.9831325233692486,
+        "core_reward": -17309.305477340735
+      },
+      "learned, seed 1, second year": {
+        "hours_violation": 0.0,
+        "vmax": 1.0499967257387084,
+        "vmin": 0.9699719419741216,
+        "losses_mwh": 389.76203127631504,
+        "reactive_absorbed_mvarh": 316.3497442692233,
+        "reactive_injected_mvarh": 41.11431228862326,
+        "curtailed_mwh": 3.4315337681003092e-06,
+        "fence_steps": 157,
+        "fence_mvarh": 4.7845101588556,
+        "core_reward": -17020.338163590743
+      },
+      "learned, seed 2, second year": {
+        "hours_violation": 0.0,
+        "vmax": 1.0499856575764983,
+        "vmin": 0.9699712794011419,
+        "losses_mwh": 390.78023478722946,
+        "reactive_absorbed_mvarh": 272.9927490452838,
+        "reactive_injected_mvarh": 41.11216730613998,
+        "curtailed_mwh": 3.5775582729818002e-06,
+        "fence_steps": 104,
+        "fence_mvarh": 3.3499219326759975,
+        "core_reward": -16887.62977240653
+      }
+    }
+  },
+  "irradiance_vs_previous_p_r2": 0.7671075736577055,
+  "steep_curves": {
+    "seed 0": {
+      "overrun_unit_steps": 0,
+      "share_gap_below_003": 0.0018289197942465232,
+      "gap_median": 0.1059415340423584
+    },
+    "seed 1": {
+      "overrun_unit_steps": 0,
+      "share_gap_below_003": 0.00832158506382168,
+      "gap_median": 0.11451053619384766
+    },
+    "seed 2": {
+      "overrun_unit_steps": 253,
+      "share_gap_below_003": 0.0630215279100781,
+      "gap_median": 0.08351516723632812
+    }
+  },
+  "runtime_s": 834.3943144999794
+}
