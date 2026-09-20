@@ -68,9 +68,9 @@ validated against pandapower to five decimal places. Feeder 1, buses 1 to 11, ca
 In the radial base case the three tie switches are open, so feeder 1 leaves bus 3 as two
 laterals: buses 4 to 6, and buses 8 to 11 with bus 7 hanging off bus 8. Buses 7 and 11 are
 the ends of those laterals, the electrically weakest points, and they are where every
-voltage problem in this study appears. The transformer tap is one step below the brochure
-setting, +4.375 % instead of +6.25 %, because the published setting overvolts the feeder at
-light load before any PV is added.
+voltage problem in this study appears. TR1's tap is three 0.625 % steps below the brochure
+setting, +4.375 % instead of +6.250 %, because the published setting overvolts the feeder at
+light load before any PV is added; TR2 keeps its published tap.
 
 *Notebook: `notebooks/01_feeder.ipynb`. The diagram is drawn by `src/make_sld.py`, which
 reads the same data file the notebooks read.*

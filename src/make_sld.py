@@ -246,7 +246,7 @@ def build(tr1_tap, with_pv, subtitle):
         r"CIGRE European MV distribution benchmark\\[2pt]"
         rf"\normalsize\mdseries {subtitle}}};")
 
-    lx, ly = 8.20, -6.4
+    lx, ly = 8.20, -6.0
     add(rf"\node[anchor=north west,align=left,draw=black!25,line width=0.5pt,"
         rf"rounded corners=2pt,inner sep=7pt,fill=black!2] at ({lx},{ly}) {{%")
     add(r"\footnotesize\begin{tabular}{@{}l@{\ \ }l@{}}")
@@ -267,12 +267,17 @@ def build(tr1_tap, with_pv, subtitle):
                  r"reactive capability at full sun. ")
     note += (r"Bus 1 and bus 12 carry the other feeders on the same transformer and "
              r"are not part of the modelled feeders.")
-    note_dy, src_dy = (3.15, 6.55) if with_pv else (2.75, 5.55)
+    note_dy, src_dy = (3.15, 6.85) if with_pv else (2.75, 5.55)
     add(rf"\node[anchor=north west,align=left,text width=5.0cm] at ({lx},{ly - note_dy}) "
         rf"{{\footnotesize {note}}};")
 
-    src = (r"Network, loads, line data and tap settings: CIGRE Technical Brochure "
-           r"575, Sections 6.2 and 9.2.4. ")
+    src = r"Network, loads and line data: CIGRE Technical Brochure 575, Section 6.2. "
+    if tr1_tap == BROCHURE_TAP:
+        src += r"Tap settings as published, Table 9.7. "
+    else:
+        steps = round((BROCHURE_TAP - tr1_tap) / 0.625)
+        src += (rf"TR2 keeps the published tap of Table 9.7; TR1 is set {steps} steps "
+                rf"of 0.625\,\% below it here. ")
     if with_pv:
         src += (r"PV ratings: Wagle et al., \emph{Front.\ Energy Res.} 10:1054870 "
                 r"(2023), Table 1. The 1.5\,MW wind unit of the brochure at bus 7 is "
