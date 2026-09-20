@@ -68,7 +68,7 @@ validated against pandapower to five decimal places. Feeder 1, buses 1 to 11, ca
 Buses 7 and 11 are the ends of the two laterals, the electrically weakest points, and they
 are where every voltage problem in this study appears.
 
-*Notebook: `01_feeder.ipynb`.*
+*Notebook: `notebooks/01_feeder.ipynb`.*
 
 ## 2. The problem
 
@@ -81,7 +81,7 @@ length instead of falling, and the far buses pass 1.05 pu.
 The transformer tap is first fixed at +4.375 %, chosen so that the feeder *without* PV stays
 inside the band all year. Every violation after that is caused by PV, not by a bad tap.
 
-*Notebook: `02_pv.ipynb`.*
+*Notebook: `notebooks/02_pv.ipynb`.*
 
 ## 3. A year of it
 
@@ -96,7 +96,7 @@ The result: **199.75 hours above 1.05 pu**, spread over 118 days from April to S
 a maximum of 1.064 pu. Nothing ever goes below 0.95 pu. The problem is purely overvoltage, and
 it is a midday, sunny-half-of-the-year problem.
 
-*Notebook: `03_profiles.ipynb`.*
+*Notebook: `notebooks/03_profiles.ipynb`.*
 
 ## 4. What a curve can do about it
 
@@ -117,7 +117,7 @@ All three fixed curves hold the limit for the whole year. What separates them is
 4,272 and 294 Mvarh of reactive energy. So the question is not *whether* the limit can be
 held, but how cheaply.
 
-*Notebook: `04_baselines.ipynb`.*
+*Notebook: `notebooks/04_baselines.ipynb`.*
 
 ## 5. Turning the curve into a decision
 
@@ -142,7 +142,7 @@ moves per kvar from each unit. Note the off-diagonal terms — a unit changes it
 voltage almost as much as its own, which is exactly why nine units acting on their own
 information is a hard problem.
 
-*Notebook: `05_environment.ipynb`.*
+*Notebook: `notebooks/05_environment.ipynb`.*
 
 ## 6. Training
 
@@ -160,7 +160,7 @@ per seed on a CPU. The full year is evaluated every 50 episodes and the best che
 Note that the year score is not monotonic: the policy at the end of training is worse than the
 best checkpoint in all three seeds. Which moment you keep matters as much as the training.
 
-*Notebook: `06_train.ipynb`.*
+*Notebook: `notebooks/06_train.ipynb`.*
 
 ## 7. What the agents learned
 
@@ -249,18 +249,29 @@ the default curve.
 
 | notebook | what it does |
 |---|---|
-| `01_feeder.ipynb` | the CIGRE European MV feeder in OpenDSS, validated against pandapower and the source brochure |
-| `02_pv.ipynb` | nine PV units, the transformer tap, where and when overvoltage appears |
-| `03_profiles.ipynb` | one synthetic year of PV and load at 15 minutes, and a screening of every step |
-| `04_baselines.ipynb` | fixed volt-var curves, volt-watt, and a per-step OPF as reference |
-| `05_environment.ipynb` | the learning environment: observations, actions, reward, safety layer |
-| `06_train.ipynb` | soft actor-critic with one shared actor for nine units, three seeds |
-| `07_results.ipynb` | all of it compared, plus the fixed-curve sweep, the safety-layer test and the unseen year |
+| `notebooks/01_feeder.ipynb` | the CIGRE European MV feeder in OpenDSS, validated against pandapower and the source brochure |
+| `notebooks/02_pv.ipynb` | nine PV units, the transformer tap, where and when overvoltage appears |
+| `notebooks/03_profiles.ipynb` | one synthetic year of PV and load at 15 minutes, and a screening of every step |
+| `notebooks/04_baselines.ipynb` | fixed volt-var curves, volt-watt, and a per-step OPF as reference |
+| `notebooks/05_environment.ipynb` | the learning environment: observations, actions, reward, safety layer |
+| `notebooks/06_train.ipynb` | soft actor-critic with one shared actor for nine units, three seeds |
+| `notebooks/07_results.ipynb` | all of it compared, plus the fixed-curve sweep, the safety-layer test and the unseen year |
 
-Modules: `cigre_dss.py` (feeder), `profiles.py` (PV and load models), `simulate.py` (year runs,
-OPF), `kpi.py` (metrics), `env.py` (environment and safety layer), `agents.py` (SAC).
-Figures are in `figures/`, headline numbers in `results_summary.json`, trained policies in
-`models/`.
+Modules in `src/`: `cigre_dss.py` (feeder), `profiles.py` (PV and load models), `simulate.py`
+(year runs, OPF), `kpi.py` (metrics), `env.py` (environment and safety layer), `agents.py`
+(SAC).
+
+```
+notebooks/   the seven notebooks, run in order
+src/         the six modules they import
+data/        the CIGRE benchmark network, as published
+results/     everything the notebooks generate (.h5, .json)
+figures/     the figures of this README
+models/      the trained policies
+```
+
+Each notebook adds `src/` to the path and works inside `results/`, so it can be run from the
+`notebooks/` folder with no further setup.
 
 ## Reproducing
 
@@ -268,14 +279,14 @@ Figures are in `figures/`, headline numbers in `results_summary.json`, trained p
 pip install opendssdirect.py numpy pandas scipy matplotlib h5py torch pandapower jupyter
 ```
 
-Run the notebooks in order; each writes the files the next one reads. Tested with Python 3.11,
+Run the notebooks in `notebooks/` in order; each writes the files the next one reads. Tested with Python 3.11,
 opendssdirect.py 0.9.4 (DSS C-API 0.14.5), numpy 2.4.6, pandas 2.3.3, scipy 1.16.3, h5py 3.16,
 matplotlib 3.11, torch 2.14 (CPU) and pandapower 3.5.4, the last used only to validate the
 feeder in notebook 01.
 
 Everything runs on a CPU. Notebook 06 takes about 30 minutes for three seeds and notebook 07
 about 14 minutes; the rest take minutes or less. The large intermediate result files
-(`train_2023.h5`, `baselines_2023.h5`, `env_checks_2023.h5`) are not tracked here: they are
+(`results/train_2023.h5`, `results/baselines_2023.h5`, `results/env_checks_2023.h5`) are not tracked here: they are
 regenerated by running notebooks 04, 05 and 06.
 
 ## Limitations
@@ -291,7 +302,7 @@ One modelling detail is worth naming, because it costs the agents dearly: the si
 inverters keep their reactive capability at zero PV output, so a curve whose knee sits below
 the night-time voltage absorbs all night. That is 479 of the default curve's 1,040 Mvarh, and
 58 to 174 Mvarh of the learned policies'. Many real inverters disconnect below a minimum
-power. Section 13 of `07_results.ipynb` states all of this in full.
+power. Section 13 of `notebooks/07_results.ipynb` states all of this in full.
 
 ## Where this goes next
 

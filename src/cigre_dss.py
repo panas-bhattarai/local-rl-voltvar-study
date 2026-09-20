@@ -24,7 +24,7 @@ import opendssdirect as dss
 
 # Local copy of cigre_mv_european_tb575.json, credit: CIGRE-MV-PSCAD repository
 # (https://github.com/panas-bhattarai/CIGRE-MV-PSCAD), data/ folder.
-DATA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data",
+DATA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "data",
                          "cigre_mv_european_tb575.json")
 W = 2 * math.pi * 50.0          # rad/s, 50 Hz system (p.51)
 

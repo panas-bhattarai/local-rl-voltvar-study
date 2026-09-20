@@ -66,7 +66,7 @@ import numpy as np
 import pandas as pd
 
 # Same data file as cigre_dss.py (data/ folder next to this module).
-DEFAULT_DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data",
+DEFAULT_DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "data",
                             "cigre_mv_european_tb575.json")
 
 # clear-sky / cloud parameters (documented in the module docstring)
