@@ -1,13 +1,21 @@
-"""Single-line diagram of the CIGRE European MV benchmark, drawn with TikZ.
+"""Single-line diagrams of the CIGRE European MV benchmark, drawn with TikZ.
 
 The topology, line lengths and types, load sizes and switch states are read
-from `data/cigre_mv_european_tb575.json`, so the drawing cannot drift from the
+from `data/cigre_mv_european_tb575.json`, so the drawings cannot drift from the
 network the notebooks build. Only the positions of the symbols on the page are
 set by hand, in the layout block below.
 
-Writes `figures/cigre_mv_sld.pdf`, and `figures/cigre_mv_sld.png` as well when
-PyMuPDF is installed. Needs a LaTeX installation with TikZ on the path. It is
-not part of the study and no notebook depends on it.
+Two configurations are drawn, because the notebooks use two:
+
+  cigre_mv_sld_benchmark  the network as published, TR1 at the brochure tap of
+                          +6.250 % and no distributed generation. This is what
+                          notebook 01 builds and validates.
+  cigre_mv_sld            the configuration studied here, TR1 at +4.375 % and
+                          nine PV inverters on feeder 1. Notebook 02 onwards.
+
+Writes the PDFs, and the PNGs as well when PyMuPDF is installed. Needs a LaTeX
+installation with TikZ on the path. It is not part of the study and no notebook
+depends on it.
 
     python src/make_sld.py
 """
@@ -23,7 +31,9 @@ with open(os.path.join(ROOT, "data", "cigre_mv_european_tb575.json")) as f:
     d = json.load(f)
 
 PV_KW = {3: 690, 4: 690, 5: 680, 6: 680, 7: 740, 8: 740, 9: 740, 10: 740, 11: 740}
-TR1_TAP = 4.375
+BROCHURE_TAP = d["transformers"][0]["tap_setting_used_in_power_flow"]["secondary_pct"]
+STUDY_TAP = 4.375
+TR2_TAP = d["transformers"][1]["tap_setting_used_in_power_flow"]["secondary_pct"]
 
 # Loads are labelled the way the brochure tabulates them (Table 6.15): the
 # residential and the commercial/industrial part of each node, in kVA.
@@ -61,6 +71,10 @@ BAR = 0.75
 # buses 4 and 8 also receive a tie line from above, so their bars are longer
 BARW = {4: 1.00, 8: 1.00}
 
+T = []
+add = T.append
+WITH_PV = True
+
 
 def bw(b):
     return BARW.get(b, BAR)
@@ -69,9 +83,6 @@ def bw(b):
 def att(b):
     """Where a tie line meets a bus bar: inside the tip, towards the centre."""
     return 0.80 if b in BARW else 0.50
-
-T = []
-add = T.append
 
 
 def bus_bar(b, x, y, side):
@@ -107,7 +118,7 @@ def taps(b, x, y, side, load_drop=0.45):
             rf"({tx},{ay}) -- ({x + s * arm},{ay});")
         add(rf"\node[rating,anchor=south] at ({x + s * arm},{ay + 0.08}) "
             rf"{{{text}}};")
-    if b in PV_KW:
+    if WITH_PV and b in PV_KW:
         tx, py, bx = x + s * 0.25, y - 1.05, x + s * 1.40
         add(rf"\draw[tap] ({tx},{y}) -- ({tx},{py}) -- ({bx - s * 0.30},{py});")
         inverter(bx, py, "l" if s > 0 else "r")
@@ -138,95 +149,6 @@ def tie(sid, path, xsw, ysw, above=False):
         rf"{{{sid} open, bus {a}--bus {bb}, {s['line_length_km']:.2f}\,km {kind}}};")
 
 
-# --- HV source and transformers -------------------------------------------
-add(rf"\draw[bus] (1.3,{HV_Y}) -- (9.7,{HV_Y});")
-add(rf"\node[bnum] at (1.00,{HV_Y}) {{0}};")
-add(rf"\node[seg,anchor=west] at (9.95,{HV_Y}) {{110\,kV}};")
-add(rf"\node[seg,anchor=south east] at ({XH - 0.20},{Y1 + 0.12}) {{20\,kV}};")
-add(rf"\draw[cable] (5.50,{HV_Y}) -- (5.50,{HV_Y + 0.80});")
-add(rf"\draw[cable] (5.50,{HV_Y + 1.15}) circle (0.35);")
-add(rf"\node[glyph] at (5.50,{HV_Y + 1.15}) {{$\sim$}};")
-add(rf"\node[val,anchor=west,align=left] at (6.05,{HV_Y + 1.15}) "
-    r"{110\,kV subtransmission\\ $S_{\mathrm{sc}}$ = 5000\,MVA, $X/R$ = 10};")
-
-for name, x, tap in (("TR1", XH, TR1_TAP), ("TR2", XF2, 3.125)):
-    yc = (HV_Y + Y1) / 2
-    add(rf"\draw[cable] ({x},{HV_Y}) -- ({x},{yc + 0.60});")
-    add(rf"\draw[cable] ({x},{yc - 0.60}) -- ({x},{Y1});")
-    add(rf"\draw[cable] ({x},{yc + 0.27}) circle (0.33);")
-    add(rf"\draw[cable] ({x},{yc - 0.27}) circle (0.33);")
-    add(rf"\node[val,anchor=west,align=left,text=tapc] at ({x + 0.55},{yc + 0.30}) "
-        rf"{{{name}\\ 110/20\,kV, 25\,MVA\\ $u_k$ = 12\,\%\\ tap {tap:+.3f}\,\%}};")
-
-# --- feeder 1 --------------------------------------------------------------
-line(1, 2, f"({XH},{Y1}) -- ({XH},{Y2})", (XH, (Y1 + Y2) / 2), "center")
-line(2, 3, f"({XH},{Y2}) -- ({XH},{Y3})", (XH, (Y2 + Y3) / 2), "center")
-add(rf"\draw[cable] ({XH},{Y3}) -- ({XH},{SPLIT_Y});")
-line(3, 4, f"({XH},{SPLIT_Y}) -- ({XL},{SPLIT_Y}) -- ({XL},{R1})",
-     (XL, (SPLIT_Y + R1) / 2), "center")
-line(3, 8, f"({XH},{SPLIT_Y}) -- ({XR},{SPLIT_Y}) -- ({XR},{R1})",
-     (XR, (SPLIT_Y + R1) / 2), "center")
-line(4, 5, f"({XL},{R1}) -- ({XL},{R2})", (XL, (R1 + R2) / 2 - 0.45), "center")
-line(5, 6, f"({XL},{R2}) -- ({XL},{R3})", (XL, (R2 + R3) / 2 - 0.45), "center")
-line(8, 9, f"({XR},{R1}) -- ({XR},{R2})", (XR, (R1 + R2) / 2 - 0.45), "center")
-line(9, 10, f"({XR},{R2}) -- ({XR},{R3})", (XR, (R2 + R3) / 2 - 0.45), "center")
-line(10, 11, f"({XR},{R3}) -- ({XR},{R4})", (XR, (R3 + R4) / 2 - 0.45), "center")
-
-# bus 7 hangs off bus 8: down from the bar, then across to the side of bus 7
-line(7, 8, f"({XR - att(8)},{R1}) -- ({XR - att(8)},{R1 + 0.55}) -- "
-           f"({X7 + 0.35},{R1 + 0.55}) -- ({X7 + 0.35},{Y7})",
-     ((XR - att(8) + X7 + 0.35) / 2, R1 + 0.60), "south")
-add(rf"\node[bnum] at ({X7 - 0.15},{Y7 + 0.45}) {{7}};")
-
-# --- feeder 2 --------------------------------------------------------------
-line(12, 13, f"({XF2},{Y1}) -- ({XF2},{-1.6})", (XF2, (Y1 - 1.6) / 2), "center")
-line(13, 14, f"({XF2},{-1.6}) -- ({XF2},{-4.6})", (XF2, -3.1), "center")
-
-for b, (x, y, side) in POS.items():
-    bus_bar(b, x, y, side)
-    if side:
-        taps(b, x, y, side, load_drop=0.45)
-
-# --- normally-open ties, drawn all the way to the bus they reach -----------
-tie("S1", f"({XF2 - att(14)},{-4.6}) -- ({XF2 - att(14)},{-5.9}) -- "
-          f"({XR + att(8)},{-5.9}) -- ({XR + att(8)},{R1})", 7.60, -5.9, above=True)
-tie("S2", f"({XL + att(6)},{R3}) -- ({XL + att(6)},{-12.9}) -- "
-          f"({X7 + 0.15},{-12.9}) -- ({X7 + 0.15},{Y7})", 1.40, -12.9)
-tie("S3", f"({XR - att(11)},{R4}) -- ({XR - att(11)},{-14.2}) -- "
-          f"(-3.80,{-14.2}) -- (-3.80,{R1 + 0.60}) -- "
-          f"({XL - att(4)},{R1 + 0.60}) -- ({XL - att(4)},{R1})", 3.30, -14.2)
-
-# --- titles and legend -----------------------------------------------------
-add(r"\node[anchor=north west,align=left] at (-4.0,6.3) {\large\bfseries "
-    r"CIGRE European MV distribution benchmark\\[2pt]"
-    r"\normalsize\mdseries 20\,kV, 50\,Hz, radial base case. "
-    r"Nine PV inverters on feeder 1, 6.44\,MW in total.};")
-
-LX, LY = 8.20, -6.4
-add(rf"\node[anchor=north west,align=left,draw=black!25,line width=0.5pt,"
-    rf"rounded corners=2pt,inner sep=7pt,fill=black!2] at ({LX},{LY}) {{%")
-add(r"\footnotesize\begin{tabular}{@{}l@{\ \ }l@{}}")
-add(r"\tikz{\draw[cable] (0,0) -- (0.62,0);} & 20\,kV cable, NA2XS2Y 120\,mm$^2$\\[3pt]")
-add(r"\tikz{\draw[ohl] (0,0) -- (0.62,0);} & 20\,kV overhead, A1 63\,mm$^2$\\[3pt]")
-add(r"\tikz{\draw[tie] (0,0) -- (0.62,0);} & tie line, switch open\\[3pt]")
-add(r"\tikz{\draw[load,-{Triangle[length=2.2mm,width=1.7mm]}] (0,0) -- (0.62,0);} "
-    r"& load, peak apparent power\\[3pt]")
-add(r"\tikz{\draw[pvbox] (0.16,-0.21) rectangle (0.58,0.21);"
-    r"\draw[pvbox] (0.16,0.21) -- (0.58,-0.21);} & PV inverter, $P_{\mathrm{mpp}}$\\")
-add(r"\end{tabular}};")
-add(rf"\node[anchor=north west,align=left,text width=5.0cm] at ({LX},{LY - 3.15}) "
-    r"{\footnotesize R and CI are the residential and the commercial/industrial part "
-    r"of a load, split as in Table 6.15 of the brochure. Inverter rating is "
-    r"$1.1\,P_{\mathrm{mpp}}$, so each unit keeps reactive capability at full sun. "
-    r"Bus 1 and bus 12 carry the other feeders on the same transformer and are not "
-    r"part of the modelled feeders.};")
-add(rf"\node[anchor=north west,align=left,text width=5.0cm,text=black!55] "
-    rf"at ({LX},{LY - 6.55}) "
-    r"{\scriptsize Network, loads and line data: CIGRE Technical Brochure 575, "
-    r"Section 6.2. PV ratings: Wagle et al., \emph{Front.\ Energy Res.} "
-    r"10:1054870 (2023), Table 1. The 1.5\,MW wind unit of the brochure at bus 7 "
-    r"is replaced by PV here.};")
-
 PRE = r"""\documentclass[border=8pt]{standalone}
 \usepackage[T1]{fontenc}
 \usepackage{times}
@@ -253,27 +175,146 @@ PRE = r"""\documentclass[border=8pt]{standalone}
   seg/.style={font=\scriptsize,text=black!55,inner sep=1pt,fill=white},
   glyph/.style={font=\scriptsize,inner sep=0pt}]
 """
-tex = PRE + "\n".join(T) + "\n\\end{tikzpicture}\n\\end{document}\n"
+
+
+def build(tr1_tap, with_pv, subtitle):
+    """Return the TikZ source for one configuration of the feeder."""
+    global WITH_PV
+    WITH_PV = with_pv
+    T.clear()
+
+    # --- HV source and transformers ----------------------------------------
+    add(rf"\draw[bus] (1.3,{HV_Y}) -- (9.7,{HV_Y});")
+    add(rf"\node[bnum] at (1.00,{HV_Y}) {{0}};")
+    add(rf"\node[seg,anchor=west] at (9.95,{HV_Y}) {{110\,kV}};")
+    add(rf"\node[seg,anchor=south east] at ({XH - 0.20},{Y1 + 0.12}) {{20\,kV}};")
+    add(rf"\draw[cable] (5.50,{HV_Y}) -- (5.50,{HV_Y + 0.80});")
+    add(rf"\draw[cable] (5.50,{HV_Y + 1.15}) circle (0.35);")
+    add(rf"\node[glyph] at (5.50,{HV_Y + 1.15}) {{$\sim$}};")
+    add(rf"\node[val,anchor=west,align=left] at (6.05,{HV_Y + 1.15}) "
+        r"{110\,kV subtransmission\\ $S_{\mathrm{sc}}$ = 5000\,MVA, $X/R$ = 10};")
+
+    for name, x, tap in (("TR1", XH, tr1_tap), ("TR2", XF2, TR2_TAP)):
+        yc = (HV_Y + Y1) / 2
+        add(rf"\draw[cable] ({x},{HV_Y}) -- ({x},{yc + 0.60});")
+        add(rf"\draw[cable] ({x},{yc - 0.60}) -- ({x},{Y1});")
+        add(rf"\draw[cable] ({x},{yc + 0.27}) circle (0.33);")
+        add(rf"\draw[cable] ({x},{yc - 0.27}) circle (0.33);")
+        add(rf"\node[val,anchor=west,align=left,text=tapc] at ({x + 0.55},{yc + 0.30}) "
+            rf"{{{name}\\ 110/20\,kV, 25\,MVA\\ $u_k$ = 12\,\%\\ tap {tap:+.3f}\,\%}};")
+
+    # --- feeder 1 ----------------------------------------------------------
+    line(1, 2, f"({XH},{Y1}) -- ({XH},{Y2})", (XH, (Y1 + Y2) / 2), "center")
+    line(2, 3, f"({XH},{Y2}) -- ({XH},{Y3})", (XH, (Y2 + Y3) / 2), "center")
+    add(rf"\draw[cable] ({XH},{Y3}) -- ({XH},{SPLIT_Y});")
+    line(3, 4, f"({XH},{SPLIT_Y}) -- ({XL},{SPLIT_Y}) -- ({XL},{R1})",
+         (XL, (SPLIT_Y + R1) / 2), "center")
+    line(3, 8, f"({XH},{SPLIT_Y}) -- ({XR},{SPLIT_Y}) -- ({XR},{R1})",
+         (XR, (SPLIT_Y + R1) / 2), "center")
+    line(4, 5, f"({XL},{R1}) -- ({XL},{R2})", (XL, (R1 + R2) / 2 - 0.45), "center")
+    line(5, 6, f"({XL},{R2}) -- ({XL},{R3})", (XL, (R2 + R3) / 2 - 0.45), "center")
+    line(8, 9, f"({XR},{R1}) -- ({XR},{R2})", (XR, (R1 + R2) / 2 - 0.45), "center")
+    line(9, 10, f"({XR},{R2}) -- ({XR},{R3})", (XR, (R2 + R3) / 2 - 0.45), "center")
+    line(10, 11, f"({XR},{R3}) -- ({XR},{R4})", (XR, (R3 + R4) / 2 - 0.45), "center")
+
+    # bus 7 hangs off bus 8: down from the bar, then across to the side of bus 7
+    line(7, 8, f"({XR - att(8)},{R1}) -- ({XR - att(8)},{R1 + 0.55}) -- "
+               f"({X7 + 0.35},{R1 + 0.55}) -- ({X7 + 0.35},{Y7})",
+         ((XR - att(8) + X7 + 0.35) / 2, R1 + 0.60), "south")
+    add(rf"\node[bnum] at ({X7 - 0.15},{Y7 + 0.45}) {{7}};")
+
+    # --- feeder 2 ----------------------------------------------------------
+    line(12, 13, f"({XF2},{Y1}) -- ({XF2},{-1.6})", (XF2, (Y1 - 1.6) / 2), "center")
+    line(13, 14, f"({XF2},{-1.6}) -- ({XF2},{-4.6})", (XF2, -3.1), "center")
+
+    for b, (x, y, side) in POS.items():
+        bus_bar(b, x, y, side)
+        if side:
+            taps(b, x, y, side, load_drop=0.45)
+
+    # --- normally-open ties, drawn all the way to the bus they reach -------
+    tie("S1", f"({XF2 - att(14)},{-4.6}) -- ({XF2 - att(14)},{-5.9}) -- "
+              f"({XR + att(8)},{-5.9}) -- ({XR + att(8)},{R1})", 7.60, -5.9, above=True)
+    tie("S2", f"({XL + att(6)},{R3}) -- ({XL + att(6)},{-12.9}) -- "
+              f"({X7 + 0.15},{-12.9}) -- ({X7 + 0.15},{Y7})", 1.40, -12.9)
+    tie("S3", f"({XR - att(11)},{R4}) -- ({XR - att(11)},{-14.2}) -- "
+              f"(-3.80,{-14.2}) -- (-3.80,{R1 + 0.60}) -- "
+              f"({XL - att(4)},{R1 + 0.60}) -- ({XL - att(4)},{R1})", 3.30, -14.2)
+
+    # --- title, legend and sources -----------------------------------------
+    add(r"\node[anchor=north west,align=left] at (-4.0,6.3) {\large\bfseries "
+        r"CIGRE European MV distribution benchmark\\[2pt]"
+        rf"\normalsize\mdseries {subtitle}}};")
+
+    lx, ly = 8.20, -6.4
+    add(rf"\node[anchor=north west,align=left,draw=black!25,line width=0.5pt,"
+        rf"rounded corners=2pt,inner sep=7pt,fill=black!2] at ({lx},{ly}) {{%")
+    add(r"\footnotesize\begin{tabular}{@{}l@{\ \ }l@{}}")
+    add(r"\tikz{\draw[cable] (0,0) -- (0.62,0);} & 20\,kV cable, NA2XS2Y 120\,mm$^2$\\[3pt]")
+    add(r"\tikz{\draw[ohl] (0,0) -- (0.62,0);} & 20\,kV overhead, A1 63\,mm$^2$\\[3pt]")
+    add(r"\tikz{\draw[tie] (0,0) -- (0.62,0);} & tie line, switch open\\[3pt]")
+    add(r"\tikz{\draw[load,-{Triangle[length=2.2mm,width=1.7mm]}] (0,0) -- (0.62,0);} "
+        r"& load, peak apparent power" + (r"\\[3pt]" if with_pv else r"\\"))
+    if with_pv:
+        add(r"\tikz{\draw[pvbox] (0.16,-0.21) rectangle (0.58,0.21);"
+            r"\draw[pvbox] (0.16,0.21) -- (0.58,-0.21);} & PV inverter, $P_{\mathrm{mpp}}$\\")
+    add(r"\end{tabular}};")
+
+    note = (r"R and CI are the residential and the commercial/industrial part of a "
+            r"load, split as in Table 6.15 of the brochure. ")
+    if with_pv:
+        note += (r"Inverter rating is $1.1\,P_{\mathrm{mpp}}$, so each unit keeps "
+                 r"reactive capability at full sun. ")
+    note += (r"Bus 1 and bus 12 carry the other feeders on the same transformer and "
+             r"are not part of the modelled feeders.")
+    note_dy, src_dy = (3.15, 6.55) if with_pv else (2.75, 5.55)
+    add(rf"\node[anchor=north west,align=left,text width=5.0cm] at ({lx},{ly - note_dy}) "
+        rf"{{\footnotesize {note}}};")
+
+    src = (r"Network, loads, line data and tap settings: CIGRE Technical Brochure "
+           r"575, Sections 6.2 and 9.2.4. ")
+    if with_pv:
+        src += (r"PV ratings: Wagle et al., \emph{Front.\ Energy Res.} 10:1054870 "
+                r"(2023), Table 1. The 1.5\,MW wind unit of the brochure at bus 7 is "
+                r"replaced by PV here.")
+    else:
+        src += (r"The brochure's own distributed generation (Table 6.18) is left out; "
+                r"the units used in this study are added later.")
+    add(rf"\node[anchor=north west,align=left,text width=5.0cm,text=black!55] "
+        rf"at ({lx},{ly - src_dy}) {{\scriptsize {src}}};")
+
+    return PRE + "\n".join(T) + "\n\\end{tikzpicture}\n\\end{document}\n"
+
+
+def render(stem, tex):
+    with open(os.path.join(OUT, stem + ".tex"), "w", encoding="utf-8") as f:
+        f.write(tex)
+    r = subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error",
+                        stem + ".tex"], cwd=OUT, capture_output=True, text=True)
+    if r.returncode:
+        out = r.stdout.splitlines()
+        first = next((i for i, ln in enumerate(out) if ln.startswith("!")), None)
+        print("\n".join(out[first:first + 12] if first is not None else out[-25:]))
+        sys.exit(1)
+    for ext in (".aux", ".log"):
+        os.remove(os.path.join(OUT, stem + ext))
+    print("wrote figures/" + stem + ".pdf")
+    try:
+        import pymupdf
+    except ImportError:
+        print("PyMuPDF is not installed, skipping the PNG")
+    else:
+        page = pymupdf.open(os.path.join(OUT, stem + ".pdf"))[0]
+        page.get_pixmap(dpi=200).save(os.path.join(OUT, stem + ".png"))
+        print("wrote figures/" + stem + ".png")
+
+
 os.makedirs(OUT, exist_ok=True)
-with open(os.path.join(OUT, "cigre_mv_sld.tex"), "w", encoding="utf-8") as f:
-    f.write(tex)
-
-r = subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error",
-                    "cigre_mv_sld.tex"], cwd=OUT, capture_output=True, text=True)
-if r.returncode:
-    out = r.stdout.splitlines()
-    first = next((i for i, ln in enumerate(out) if ln.startswith("!")), None)
-    print("\n".join(out[first:first + 12] if first is not None else out[-25:]))
-    sys.exit(1)
-for ext in (".aux", ".log"):
-    os.remove(os.path.join(OUT, "cigre_mv_sld" + ext))
-print("wrote figures/cigre_mv_sld.pdf")
-
-try:
-    import pymupdf
-except ImportError:
-    print("PyMuPDF is not installed, skipping the PNG")
-else:
-    page = pymupdf.open(os.path.join(OUT, "cigre_mv_sld.pdf"))[0]
-    page.get_pixmap(dpi=200).save(os.path.join(OUT, "cigre_mv_sld.png"))
-    print("wrote figures/cigre_mv_sld.png")
+render("cigre_mv_sld_benchmark",
+       build(BROCHURE_TAP, False,
+             r"20\,kV, 50\,Hz, radial base case as published, without "
+             r"distributed generation."))
+render("cigre_mv_sld",
+       build(STUDY_TAP, True,
+             r"20\,kV, 50\,Hz, radial base case as studied here. Nine PV "
+             r"inverters on feeder 1, 6.44\,MW in total."))

@@ -264,9 +264,10 @@ the default curve.
 
 Modules in `src/`: `cigre_dss.py` (feeder), `profiles.py` (PV and load models), `simulate.py`
 (year runs, OPF), `kpi.py` (metrics), `env.py` (environment and safety layer), `agents.py`
-(SAC). Also in `src/`, and not used by any notebook, `make_sld.py` draws the single-line
-diagram at the top of this README from the network data file; it needs a LaTeX installation
-with TikZ, and PyMuPDF if you want the PNG as well as the PDF.
+(SAC). Also in `src/`, and not used by any notebook, `make_sld.py` draws the single-line diagrams
+from the network data file: `cigre_mv_sld` is the configuration studied here, shown above,
+and `cigre_mv_sld_benchmark` is the network as published, which is what notebook 01 builds
+and validates. It needs a LaTeX installation with TikZ, and PyMuPDF for the PNGs.
 
 ```
 notebooks/   the seven notebooks, run in order
