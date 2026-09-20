@@ -277,9 +277,6 @@ def build(tr1_tap, with_pv, subtitle):
         src += (r"PV ratings: Wagle et al., \emph{Front.\ Energy Res.} 10:1054870 "
                 r"(2023), Table 1. The 1.5\,MW wind unit of the brochure at bus 7 is "
                 r"replaced by PV here.")
-    else:
-        src += (r"The brochure's own distributed generation (Table 6.18) is left out; "
-                r"the units used in this study are added later.")
     add(rf"\node[anchor=north west,align=left,text width=5.0cm,text=black!55] "
         rf"at ({lx},{ly - src_dy}) {{\scriptsize {src}}};")
 
