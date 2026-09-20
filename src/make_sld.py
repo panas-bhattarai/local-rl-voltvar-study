@@ -25,11 +25,19 @@ with open(os.path.join(ROOT, "data", "cigre_mv_european_tb575.json")) as f:
 PV_KW = {3: 690, 4: 690, 5: 680, 6: 680, 7: 740, 8: 740, 9: 740, 10: 740, 11: 740}
 TR1_TAP = 4.375
 
-load_kw = {}
+# Loads are labelled the way the brochure tabulates them (Table 6.15): the
+# residential and the commercial/industrial part of each node, in kVA.
+load_kva = {}
 for l in d["loads"]:
-    load_kw[l["bus"]] = sum(
-        l[k]["P_kW_derived"] for k in ("residential", "commercial_industrial")
-        if l.get(k) and l[k].get("S_kVA"))
+    parts = []
+    for key, tag in (("residential", "R"), ("commercial_industrial", "CI")):
+        if l.get(key) and l[key].get("S_kVA"):
+            parts.append(rf"{tag} {l[key]['S_kVA']:g}")
+    if parts:
+        # the label, and the arm length it needs so that it clears the drop
+        text = r"\enspace ".join(parts) + r"\,kVA"
+        chars = len("  ".join(parts)) + 4
+        load_kva[l["bus"]] = (text, max(1.62, 0.80 + 0.112 * chars / 2))
 seg = {}
 for l in d["lines"]:
     seg[(l["from_bus"], l["to_bus"])] = l
@@ -66,10 +74,6 @@ T = []
 add = T.append
 
 
-def kw(p):
-    return f"{p / 1000:.1f}\\,MW" if p >= 1000 else f"{int(p + 0.5)}\\,kW"
-
-
 def bus_bar(b, x, y, side):
     """The bus number goes on the side away from the load and PV drops."""
     s = -1 if side == "r" else 1
@@ -95,13 +99,14 @@ def inverter(x, y, face, h=0.30):
 def taps(b, x, y, side, load_drop=0.45):
     """Load and PV both drop off the bus bar and then turn out to the side."""
     s = -1 if side == "l" else 1
-    if load_kw.get(b):
+    if b in load_kva:
+        text, arm = load_kva[b]
         tx, ay = x + s * 0.52, y - load_drop
         add(rf"\draw[tap] ({tx},{y}) -- ({tx},{ay});")
         add(rf"\draw[load,-{{Triangle[length=2.6mm,width=2.0mm]}}] "
-            rf"({tx},{ay}) -- ({x + s * 1.62},{ay});")
-        add(rf"\node[rating,anchor=south] at ({x + s * 1.62},{ay + 0.08}) "
-            rf"{{{kw(load_kw[b])}}};")
+            rf"({tx},{ay}) -- ({x + s * arm},{ay});")
+        add(rf"\node[rating,anchor=south] at ({x + s * arm},{ay + 0.08}) "
+            rf"{{{text}}};")
     if b in PV_KW:
         tx, py, bx = x + s * 0.25, y - 1.05, x + s * 1.40
         add(rf"\draw[tap] ({tx},{y}) -- ({tx},{py}) -- ({bx - s * 0.30},{py});")
@@ -136,6 +141,8 @@ def tie(sid, path, xsw, ysw, above=False):
 # --- HV source and transformers -------------------------------------------
 add(rf"\draw[bus] (1.3,{HV_Y}) -- (9.7,{HV_Y});")
 add(rf"\node[bnum] at (1.00,{HV_Y}) {{0}};")
+add(rf"\node[seg,anchor=west] at (9.95,{HV_Y}) {{110\,kV}};")
+add(rf"\node[seg,anchor=south east] at ({XH - 0.20},{Y1 + 0.12}) {{20\,kV}};")
 add(rf"\draw[cable] (5.50,{HV_Y}) -- (5.50,{HV_Y + 0.80});")
 add(rf"\draw[cable] (5.50,{HV_Y + 1.15}) circle (0.35);")
 add(rf"\node[glyph] at (5.50,{HV_Y + 1.15}) {{$\sim$}};")
@@ -186,16 +193,16 @@ tie("S1", f"({XF2 - att(14)},{-4.6}) -- ({XF2 - att(14)},{-5.9}) -- "
 tie("S2", f"({XL + att(6)},{R3}) -- ({XL + att(6)},{-12.9}) -- "
           f"({X7 + 0.15},{-12.9}) -- ({X7 + 0.15},{Y7})", 1.40, -12.9)
 tie("S3", f"({XR - att(11)},{R4}) -- ({XR - att(11)},{-14.2}) -- "
-          f"(-3.70,{-14.2}) -- (-3.70,{R1 + 0.60}) -- "
+          f"(-3.80,{-14.2}) -- (-3.80,{R1 + 0.60}) -- "
           f"({XL - att(4)},{R1 + 0.60}) -- ({XL - att(4)},{R1})", 3.30, -14.2)
 
 # --- titles and legend -----------------------------------------------------
-add(r"\node[anchor=north west,align=left] at (-4.2,6.3) {\large\bfseries "
+add(r"\node[anchor=north west,align=left] at (-4.0,6.3) {\large\bfseries "
     r"CIGRE European MV distribution benchmark\\[2pt]"
     r"\normalsize\mdseries 20\,kV, 50\,Hz, radial base case. "
     r"Nine PV inverters on feeder 1, 6.44\,MW in total.};")
 
-LX, LY = 7.90, -6.4
+LX, LY = 8.20, -6.4
 add(rf"\node[anchor=north west,align=left,draw=black!25,line width=0.5pt,"
     rf"rounded corners=2pt,inner sep=7pt,fill=black!2] at ({LX},{LY}) {{%")
 add(r"\footnotesize\begin{tabular}{@{}l@{\ \ }l@{}}")
@@ -203,16 +210,18 @@ add(r"\tikz{\draw[cable] (0,0) -- (0.62,0);} & 20\,kV cable, NA2XS2Y 120\,mm$^2$
 add(r"\tikz{\draw[ohl] (0,0) -- (0.62,0);} & 20\,kV overhead, A1 63\,mm$^2$\\[3pt]")
 add(r"\tikz{\draw[tie] (0,0) -- (0.62,0);} & tie line, switch open\\[3pt]")
 add(r"\tikz{\draw[load,-{Triangle[length=2.2mm,width=1.7mm]}] (0,0) -- (0.62,0);} "
-    r"& load, peak active power\\[3pt]")
+    r"& load, peak apparent power\\[3pt]")
 add(r"\tikz{\draw[pvbox] (0.16,-0.21) rectangle (0.58,0.21);"
     r"\draw[pvbox] (0.16,0.21) -- (0.58,-0.21);} & PV inverter, $P_{\mathrm{mpp}}$\\")
 add(r"\end{tabular}};")
 add(rf"\node[anchor=north west,align=left,text width=5.0cm] at ({LX},{LY - 3.15}) "
-    r"{\footnotesize Inverter rating is $1.1\,P_{\mathrm{mpp}}$, so each unit keeps "
-    r"reactive capability at full sun. Bus 1 and bus 12 carry the other feeders on "
-    r"the same transformer and are not part of the modelled feeders.};")
+    r"{\footnotesize R and CI are the residential and the commercial/industrial part "
+    r"of a load, split as in Table 6.15 of the brochure. Inverter rating is "
+    r"$1.1\,P_{\mathrm{mpp}}$, so each unit keeps reactive capability at full sun. "
+    r"Bus 1 and bus 12 carry the other feeders on the same transformer and are not "
+    r"part of the modelled feeders.};")
 add(rf"\node[anchor=north west,align=left,text width=5.0cm,text=black!55] "
-    rf"at ({LX},{LY - 5.60}) "
+    rf"at ({LX},{LY - 6.55}) "
     r"{\scriptsize Network, loads and line data: CIGRE Technical Brochure 575, "
     r"Section 6.2. PV ratings: Wagle et al., \emph{Front.\ Energy Res.} "
     r"10:1054870 (2023), Table 1. The 1.5\,MW wind unit of the brochure at bus 7 "
