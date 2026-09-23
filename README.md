@@ -15,8 +15,9 @@ fixed curve.** The information that is missing is not local.
 
 Everything is in eight notebooks, in order, with their figures. Nothing is downloaded: the
 network comes from the published CIGRE benchmark data, and the year of weather and load is
-generated from a seed. The last notebook checks the study's inverter model against a dynamic
-one running in Typhoon HIL; its results are included, so it too runs without that software.
+generated from a seed. The last notebook puts the trained agents on dynamic inverter models
+in Typhoon HIL, in the loop with the feeder; its results are included, so it too runs without
+that software.
 
 ---
 
@@ -35,7 +36,7 @@ one running in Typhoon HIL; its results are included, so it too runs without tha
 11. [Why local control stops there](#10-why-local-control-stops-there)
 12. [The limit needs its own guard](#11-the-limit-needs-its-own-guard)
 13. [A year nobody trained on](#12-a-year-nobody-trained-on)
-14. [The inverter, checked with a dynamic model](#13-the-inverter-checked-with-a-dynamic-model)
+14. [The agents on the inverter](#13-the-agents-on-the-inverter)
 15. [Files, reproducing, limitations](#files)
 
 ---
@@ -250,20 +251,23 @@ Nothing moves. Every margin changes by at most 0.2 points, and the ranking is id
 both years: best fixed curve + safety layer, then seeds 2, 1, the lazy curve and seed 0, then
 the default curve.
 
-## 13. The inverter, checked with a dynamic model
+## 13. The agents on the inverter
 
 Everything above treats an inverter as a static device that delivers whatever its curve asks,
-instantly. To check that, the four far units (buses 7, 9, 10, 11) were handed to dynamic
-inverter models in Typhoon HIL (Virtual HIL, not real time), with the agent's curve points of
-the sunniest day, and OpenDSS and Typhoon exchanged bus voltages and inverter powers once a
-second, in the manner of a real-time co-simulation.
+instantly, and runs the agent as a PyTorch network in Python. To check both, the four far units
+(buses 7, 9, 10, 11) were replaced by dynamic inverter models in Typhoon HIL (Virtual HIL, not
+real time), with the trained actor compiled into each of them as a C block, so that every
+15 minutes each inverter decides its own curve points from what it measures at its own terminal.
+The other five units stay in OpenDSS, decided by the same network in Python, and the two
+programs exchange bus voltages and inverter powers about once a second, in the manner of a
+real-time co-simulation.
 
-![Four inverters in the loop](figures/08_01_day.png)
+![Agents on dynamic inverters in the loop](figures/08_01_day.png)
 
 The day is reproduced: voltages within 0.0005 pu, reactive power within about 1 kvar on units
-absorbing up to 75 kvar, and the agent's new curve points were written to running inverters
-every 15 minutes without a jump or a trip. The one thing the static model cannot show is what
-happens between two 15-minute points:
+absorbing up to 75 kvar, and the C block matches the PyTorch actor to better than 0.01 in any
+curve point. The one thing the static model cannot show is what happens between two 15-minute
+points:
 
 ![The 11:30 transient](figures/08_02_transient.png)
 
@@ -272,9 +276,10 @@ before the inverters pulled them back under the limit. "Zero hours above 1.05 pu
 15-minute statement; what happens inside a minute is decided by how fast the local controller
 acts, which is a question for real-time tests and not for a power-flow study.
 
-*Notebook: `notebooks/08_hil.ipynb`. The Typhoon model is built and the loop is run from the
-notebook when Typhoon HIL Control Center 2023.4 and its Python API are installed; otherwise
-the notebook reads the saved results in `results/hil_day171.csv` and `results/hil_transient_1130.csv`.*
+*Notebook: `notebooks/08_hil.ipynb`. The network is exported to C, the Typhoon model is built
+and the loop is run from the notebook when Typhoon HIL Control Center 2023.4 and its Python API
+are installed; otherwise the notebook reads the saved results in `results/hil_day171.csv` and
+`results/hil_transient_1130.csv`.*
 
 ---
 
@@ -289,7 +294,7 @@ the notebook reads the saved results in `results/hil_day171.csv` and `results/hi
 | `notebooks/05_environment.ipynb` | the learning environment: observations, actions, reward, safety layer |
 | `notebooks/06_train.ipynb` | soft actor-critic with one shared actor for nine units, three seeds |
 | `notebooks/07_results.ipynb` | all of it compared, plus the fixed-curve sweep, the safety-layer test and the unseen year |
-| `notebooks/08_hil.ipynb` | four dynamic inverters in Typhoon HIL in the loop with the OpenDSS feeder, one day and one transient |
+| `notebooks/08_hil.ipynb` | the agents compiled into four dynamic inverters in Typhoon HIL, in the loop with the OpenDSS feeder: one day and one transient |
 
 Modules in `src/`: `cigre_dss.py` (feeder), `profiles.py` (PV and load models), `simulate.py`
 (year runs, OPF), `kpi.py` (metrics), `env.py` (environment and safety layer), `agents.py`
@@ -332,7 +337,7 @@ regenerated by running notebooks 04, 05 and 06. Notebook 08 needs Typhoon HIL Co
 
 Synthetic profiles from a simple weather model; one feeder and one PV penetration; balanced
 positive-sequence power flow every 15 minutes, with no dynamics (notebook 08 adds one day and
-one transient with dynamic inverters, in Virtual HIL and not in real time), unbalance,
+one transient with the agents on dynamic inverters, in Virtual HIL and not in real time), unbalance,
 measurement noise or communication delay; a fixed transformer tap and no other voltage-control device; a safety
 layer that uses the exact network model; three training seeds, whose spread is as wide as some
 of the differences being compared; and one particular choice of reward weights, whose voltage
